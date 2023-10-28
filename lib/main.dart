@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insta_chat/firebase_options.dart';
 import 'package:insta_chat/shared/bloc_observer.dart';
-import 'package:insta_chat/shared/cubit/cubit/sign_up_cubit.dart';
+import 'package:insta_chat/shared/cubit/sign_in/sign_in_cubit.dart';
+import 'package:insta_chat/shared/cubit/sign_up/sign_up_cubit.dart';
 import 'package:insta_chat/shared/network/cache_helper.dart';
 import 'package:insta_chat/shared/network/dio_helper.dart';
 import 'package:insta_chat/utils/themes.dart';
@@ -30,9 +31,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => SignUpCubit(),
         ),
-        // BlocProvider(
-        //   create: (context) => SubjectBloc(),
-        // ),
+        BlocProvider(
+          create: (context) => SignInCubit(),
+        ),
       ],
       child: MaterialApp(
         title: 'Insta Chat',

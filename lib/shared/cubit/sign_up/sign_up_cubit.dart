@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:insta_chat/shared/cubit/cubit/sign_up_state.dart';
+import 'package:insta_chat/shared/cubit/sign_up/sign_up_state.dart';
 import 'package:insta_chat/shared/network/cache_helper.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {

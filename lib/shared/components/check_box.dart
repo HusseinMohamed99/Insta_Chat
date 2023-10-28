@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:insta_chat/shared/cubit/cubit/sign_up_cubit.dart';
+import 'package:insta_chat/shared/cubit/sign_up/sign_up_cubit.dart';
 import 'package:insta_chat/utils/color_manager.dart';
 
 Widget checkBox(BuildContext context, {Color? color}) {
