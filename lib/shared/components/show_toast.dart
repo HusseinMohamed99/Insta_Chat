@@ -12,7 +12,7 @@ void showToast({
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 5,
       backgroundColor: chooseToastColor(state),
-      textColor: ColorManager.titanWithColor,
+      textColor: ColorManager.white,
       fontSize: 16,
     );
 
@@ -22,11 +22,11 @@ Color chooseToastColor(ToastStates state) {
   Color color;
   switch (state) {
     case ToastStates.success:
-      color = ColorManager.greenColor;
+      color = ColorManager.success;
       break;
 
     case ToastStates.error:
-      color = ColorManager.redColor;
+      color = ColorManager.error;
       break;
 
     case ToastStates.warning:

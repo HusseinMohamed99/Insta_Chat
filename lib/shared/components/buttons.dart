@@ -18,7 +18,7 @@ Widget defaultMaterialButton({
     height: height ?? 48,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(radius ?? 8),
-      color: color ?? ColorManager.whiteColor,
+      color: color ?? ColorManager.white,
     ),
     child: MaterialButton(
       onPressed: () {

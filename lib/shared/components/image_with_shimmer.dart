@@ -31,7 +31,7 @@ class ImageWithShimmer extends StatelessWidget {
         highlightColor: Colors.grey[800]!,
         child: Container(
           height: height,
-          color: ColorManager.greyColor,
+          color: ColorManager.grey,
         ),
       ),
       imageBuilder: (context, imageProvider) {
