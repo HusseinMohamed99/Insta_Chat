@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FontConstant {
-  static const String fontFamily = "Oswald";
+  static const String fontFamily = "Pacifico";
   static const String robotoFamily = "Roboto";
 }
 

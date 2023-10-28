@@ -34,11 +34,12 @@ TextStyle getRegularStyle(
 }
 
 // Medium Style
-TextStyle getMediumStyle(
-    {double fontSize = FontSize.s12,
-    required Color color,
-    double? height,
-    FontStyle? fontStyle}) {
+TextStyle getMediumStyle({
+  double fontSize = FontSize.s12,
+  required Color color,
+  double? height,
+  FontStyle? fontStyle,
+}) {
   return _getTextStyle(
       fontSize, FontWeightManager.medium, color, height, fontStyle);
 }

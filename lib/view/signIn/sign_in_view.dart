@@ -6,14 +6,17 @@ class SignInView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
       ),
       child: Scaffold(
         body: Center(
-          child: Text('Sign In'),
+          child: Text(
+            'Sign In',
+            style: Theme.of(context).textTheme.displayLarge,
+          ),
         ),
       ),
     );

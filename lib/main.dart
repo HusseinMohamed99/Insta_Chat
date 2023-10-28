@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:insta_chat/firebase_options.dart';
+import 'package:insta_chat/utils/themes.dart';
 import 'package:insta_chat/view/signIn/sign_in_view.dart';
 
 void main() async {
@@ -20,18 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Insta Chat',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        primarySwatch: Colors.blue,
-        appBarTheme: const AppBarTheme(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: Colors.transparent,
-            statusBarIconBrightness: Brightness.dark,
-          ),
-        ),
-      ),
+      theme: getApplicationTheme(),
       home: const SignInView(),
     );
   }
