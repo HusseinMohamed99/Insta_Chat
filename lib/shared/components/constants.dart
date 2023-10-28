@@ -29,7 +29,7 @@
 //   return date;
 // }
 
-// String? uId = '';
+String? uId = '';
 
 // Widget imageWithShimmer(
 //   String? image, {

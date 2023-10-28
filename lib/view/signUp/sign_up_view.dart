@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:insta_chat/cubit/sign_up/sign_up_cubit.dart';
+import 'package:insta_chat/cubit/sign_up/sign_up_state.dart';
 import 'package:insta_chat/shared/components/buttons.dart';
 import 'package:insta_chat/shared/components/check_box.dart';
 import 'package:insta_chat/shared/components/navigator.dart';
+import 'package:insta_chat/shared/components/show_toast.dart';
 import 'package:insta_chat/shared/components/text_form_field.dart';
-import 'package:insta_chat/shared/cubit/sign_up/sign_up_cubit.dart';
-import 'package:insta_chat/shared/cubit/sign_up/sign_up_state.dart';
+import 'package:insta_chat/shared/network/cache_helper.dart';
 import 'package:insta_chat/utils/app_string.dart';
 import 'package:insta_chat/utils/color_manager.dart';
 import 'package:insta_chat/utils/my_validators.dart';
@@ -39,7 +41,15 @@ class SignUpScreen extends StatelessWidget {
         statusBarIconBrightness: Brightness.dark,
       ),
       child: BlocConsumer<SignUpCubit, SignUpState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is SignUpSuccessState) {
+            CacheHelper.saveData(value: state.userModel.uid, key: 'uId');
+            showToast(text: 'SignUpSuccessState', state: ToastStates.success);
+          }
+          if (state is SignUpErrorState) {
+            showToast(text: state.error, state: ToastStates.error);
+          }
+        },
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
@@ -258,21 +268,29 @@ class SignUpScreen extends StatelessWidget {
                             ),
                           ),
                           SliverToBoxAdapter(
-                            child: defaultMaterialButton(
-                              function: () {
-                                if (formKey.currentState!.validate()) {
-                                  //   SignUpCubit.get(context).createUser(
-                                  //     name: nameController.text,
-                                  //     email: emailController.text,
-                                  //     password: passwordController.text,
-                                  //     confirmPassword: confirmPasswordController.text,
-                                  //   );
-                                }
-                              },
-                              text: AppString.signUp,
-                              context: context,
-                              color: ColorManager.primaryColor,
-                            ),
+                            child: !signUpCubit.isCheck
+                                ? defaultMaterialButton(
+                                    function: () {},
+                                    text: AppString.signUp,
+                                    context: context,
+                                    color: ColorManager.primaryColor
+                                        .withOpacity(0.5),
+                                  )
+                                : defaultMaterialButton(
+                                    function: () {
+                                      if (formKey.currentState!.validate()) {
+                                        signUpCubit.userSignUp(
+                                          name: nameController.text,
+                                          email: emailController.text,
+                                          password: passwordController.text,
+                                          phone: phoneController.text,
+                                        );
+                                      }
+                                    },
+                                    text: AppString.signUp,
+                                    context: context,
+                                    color: ColorManager.primaryColor,
+                                  ),
                           ),
                           const SliverToBoxAdapter(
                             child: SizedBox(

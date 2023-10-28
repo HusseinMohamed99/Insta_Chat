@@ -3,6 +3,7 @@ class UserModel {
   final String email;
   final String phone;
   final String uid;
+  final String token;
   final String image;
   final String bio;
   final bool isEmailVerified;
@@ -12,9 +13,10 @@ class UserModel {
     required this.email,
     required this.phone,
     this.uid = '',
+    this.token = '',
     required this.image,
     required this.bio,
-    this.isEmailVerified = false,
+    required this.isEmailVerified,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class UserModel {
       email: json['email'],
       phone: json['phone'],
       uid: json['uid'],
+      token: json['token'],
       image: json['image'],
       bio: json['bio'],
       isEmailVerified: json['isEmailVerified'],
@@ -35,6 +38,7 @@ class UserModel {
       'email': email,
       'phone': phone,
       'uid': uid,
+      'token': token,
       'image': image,
       'bio': bio,
       'isEmailVerified': isEmailVerified,

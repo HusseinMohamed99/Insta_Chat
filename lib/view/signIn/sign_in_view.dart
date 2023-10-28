@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:insta_chat/cubit/sign_in/sign_in_cubit.dart';
+import 'package:insta_chat/cubit/sign_in/sign_in_state.dart';
 import 'package:insta_chat/shared/components/buttons.dart';
+import 'package:insta_chat/shared/components/constants.dart';
 import 'package:insta_chat/shared/components/navigator.dart';
+import 'package:insta_chat/shared/components/show_toast.dart';
 import 'package:insta_chat/shared/components/text_form_field.dart';
-import 'package:insta_chat/shared/cubit/sign_in/sign_in_cubit.dart';
-import 'package:insta_chat/shared/cubit/sign_in/sign_in_state.dart';
+import 'package:insta_chat/shared/network/cache_helper.dart';
 import 'package:insta_chat/utils/app_string.dart';
 import 'package:insta_chat/utils/color_manager.dart';
 import 'package:insta_chat/utils/my_validators.dart';
 import 'package:insta_chat/utils/value_manager.dart';
+import 'package:insta_chat/view/home/home_view.dart';
 import 'package:insta_chat/view/signUp/sign_up_view.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -31,7 +35,18 @@ class SignInScreen extends StatelessWidget {
         statusBarIconBrightness: Brightness.dark,
       ),
       child: BlocConsumer<SignInCubit, SignInState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is SignInSuccessState) {
+            CacheHelper.saveData(value: state.uid, key: 'uId');
+            showToast(text: 'Sign In Successfully', state: ToastStates.success);
+            uId = state.uid;
+            navigateAndFinish(context, const HomeScreen());
+          }
+
+          if (state is SignInErrorState) {
+            showToast(text: state.error, state: ToastStates.error);
+          }
+        },
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
@@ -138,10 +153,10 @@ class SignInScreen extends StatelessWidget {
                             child: defaultMaterialButton(
                               function: () {
                                 if (formKey.currentState!.validate()) {
-                                  //   LoginCubit.get(context).userLogin(
-                                  //     email: emailController.text,
-                                  //     password: passwordController.text,
-                                  //   );
+                                  signInCubit.userSignIn(
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                  );
                                 }
                               },
                               text: AppString.signIn,

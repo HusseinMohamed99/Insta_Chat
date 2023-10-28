@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:insta_chat/shared/cubit/sign_up/sign_up_cubit.dart';
+import 'package:insta_chat/cubit/sign_up/sign_up_cubit.dart';
 import 'package:insta_chat/utils/color_manager.dart';
 
 Widget checkBox(BuildContext context, {Color? color}) {
-  var cubit = SignUpCubit.get(context);
+  SignUpCubit cubit = SignUpCubit.get(context);
   return Checkbox.adaptive(
     side: BorderSide(
       color: color ?? ColorManager.white,

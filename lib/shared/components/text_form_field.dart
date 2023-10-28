@@ -38,7 +38,7 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       style: TextStyle(color: ColorManager.black),
-      inputFormatters: const [],
+      inputFormatters: const <TextInputFormatter>[],
       controller: controller,
       focusNode: focusNode,
       textInputAction: textInputAction,
