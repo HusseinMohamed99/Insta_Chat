@@ -12,10 +12,10 @@ TextStyle _getTextStyle(double fontSize, FontWeight fontWeight, Color color,
       fontStyle: fontStyle);
 }
 
-TextStyle _getRobotoTextStyle(double fontSize, FontWeight fontWeight,
+TextStyle _getPacificoTextStyle(double fontSize, FontWeight fontWeight,
     Color color, double? height, FontStyle? fontStyle) {
   return TextStyle(
-      fontFamily: FontConstant.robotoFamily,
+      fontFamily: FontConstant.pacificoFamily,
       fontSize: fontSize,
       color: color,
       fontWeight: fontWeight,
@@ -75,41 +75,41 @@ TextStyle getBoldStyle(
 }
 
 // Regular Style
-TextStyle getRegularRobotoStyle(
+TextStyle getRegularPacificoStyle(
     {double fontSize = FontSize.s12,
     required Color color,
     double? height,
     FontStyle? fontStyle}) {
-  return _getRobotoTextStyle(
+  return _getPacificoTextStyle(
       fontSize, FontWeightManager.regular, color, height, fontStyle);
 }
 
 // Medium Style
-TextStyle getMediumRobotoStyle(
+TextStyle getMediumPacificoStyle(
     {double fontSize = FontSize.s12,
     required Color color,
     double? height,
     FontStyle? fontStyle}) {
-  return _getRobotoTextStyle(
+  return _getPacificoTextStyle(
       fontSize, FontWeightManager.medium, color, height, fontStyle);
 }
 
 // Light Style
-TextStyle getLightRobotoStyle(
+TextStyle getLightPacificoStyle(
     {double fontSize = FontSize.s12,
     required Color color,
     double? height,
     FontStyle? fontStyle}) {
-  return _getRobotoTextStyle(
+  return _getPacificoTextStyle(
       fontSize, FontWeightManager.light, color, height, fontStyle);
 }
 
 // Bold Style
-TextStyle getBoldRobotoStyle(
+TextStyle getBoldPacificoStyle(
     {double fontSize = FontSize.s12,
     required Color color,
     double? height,
     FontStyle? fontStyle}) {
-  return _getRobotoTextStyle(
+  return _getPacificoTextStyle(
       fontSize, FontWeightManager.bold, color, height, fontStyle);
 }

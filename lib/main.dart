@@ -1,6 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insta_chat/firebase_options.dart';
+import 'package:insta_chat/shared/bloc_observer.dart';
+import 'package:insta_chat/shared/cubit/cubit/sign_up_cubit.dart';
+import 'package:insta_chat/shared/network/cache_helper.dart';
+import 'package:insta_chat/shared/network/dio_helper.dart';
 import 'package:insta_chat/utils/themes.dart';
 import 'package:insta_chat/view/signIn/sign_in_view.dart';
 
@@ -9,6 +14,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Bloc.observer = MyBlocObserver();
+  await CacheHelper.init();
+  DioHelper.init();
   runApp(const MyApp());
 }
 
@@ -17,11 +25,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Insta Chat',
-      debugShowCheckedModeBanner: false,
-      theme: getApplicationTheme(),
-      home: const SignInView(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => SignUpCubit(),
+        ),
+        // BlocProvider(
+        //   create: (context) => SubjectBloc(),
+        // ),
+      ],
+      child: MaterialApp(
+        title: 'Insta Chat',
+        debugShowCheckedModeBanner: false,
+        theme: getApplicationTheme(),
+        home: const SignInScreen(),
+      ),
     );
   }
 }

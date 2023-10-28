@@ -1,17 +1,17 @@
-// import 'package:flutter/material.dart';
-// import 'package:socialite/shared/cubit/loginCubit/login_cubit.dart';
-// import 'package:socialite/shared/utils/color_manager.dart';
+import 'package:flutter/material.dart';
+import 'package:insta_chat/shared/cubit/cubit/sign_up_cubit.dart';
+import 'package:insta_chat/utils/color_manager.dart';
 
-// Widget checkBox(BuildContext context, {Color? color}) {
-//   var cubit = LoginCubit.get(context);
-//   return Checkbox.adaptive(
-//     side: BorderSide(
-//       color: color ?? ColorManager.whiteColor,
-//     ),
-//     activeColor: ColorManager.mainColor,
-//     value: cubit.isCheck,
-//     onChanged: (e) {
-//       cubit.boxCheck(e!);
-//     },
-//   );
-// }
+Widget checkBox(BuildContext context, {Color? color}) {
+  var cubit = SignUpCubit.get(context);
+  return Checkbox.adaptive(
+    side: BorderSide(
+      color: color ?? ColorManager.white,
+    ),
+    activeColor: ColorManager.primaryColor,
+    value: cubit.isCheck,
+    onChanged: (e) {
+      cubit.boxCheck(e!);
+    },
+  );
+}

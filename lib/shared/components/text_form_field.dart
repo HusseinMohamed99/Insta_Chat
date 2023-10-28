@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:insta_chat/utils/color_manager.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -16,6 +17,7 @@ class CustomTextFormField extends StatelessWidget {
     this.suffixIconOnTap,
     this.obscureText = false,
     this.suffixIcon,
+    this.inputFormatters,
   });
 
   final IconData prefixIcon;
@@ -30,11 +32,13 @@ class CustomTextFormField extends StatelessWidget {
   final Function(String?)? onChanged;
   final String? Function(String?)? validator;
   final Function()? suffixIconOnTap;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       style: TextStyle(color: ColorManager.black),
+      inputFormatters: const [],
       controller: controller,
       focusNode: focusNode,
       textInputAction: textInputAction,

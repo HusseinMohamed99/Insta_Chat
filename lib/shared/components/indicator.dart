@@ -8,7 +8,7 @@ class AdaptiveIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircularProgressIndicator.adaptive(
       backgroundColor: ColorManager.grey,
-      valueColor: AlwaysStoppedAnimation<Color>(ColorManager.primary),
+      valueColor: AlwaysStoppedAnimation<Color>(ColorManager.primaryColor),
       strokeWidth: 6,
     );
   }

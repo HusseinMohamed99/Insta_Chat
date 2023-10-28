@@ -7,11 +7,12 @@ import 'package:insta_chat/utils/value_manager.dart';
 ThemeData getApplicationTheme() {
   return ThemeData(
     //Colors
-    primaryColor: ColorManager.primary,
+    primaryColor: ColorManager.primaryColor,
     primaryColorLight: ColorManager.lightPrimary,
     primaryColorDark: ColorManager.darkPrimary,
     disabledColor: ColorManager.grey1,
     splashColor: ColorManager.lightPrimary,
+    scaffoldBackgroundColor: ColorManager.primaryColor,
 
     //Cards Theme
     cardTheme: CardTheme(
@@ -22,8 +23,8 @@ ThemeData getApplicationTheme() {
 
     //AppBar Theme
     appBarTheme: AppBarTheme(
+        backgroundColor: ColorManager.primaryColor,
         centerTitle: true,
-        color: ColorManager.transparent,
         elevation: AppSize.s0,
         shadowColor: ColorManager.lightGrey,
         titleTextStyle: getRegularStyle(
@@ -35,7 +36,7 @@ ThemeData getApplicationTheme() {
     buttonTheme: ButtonThemeData(
         shape: const StadiumBorder(),
         disabledColor: ColorManager.grey1,
-        buttonColor: ColorManager.primary,
+        buttonColor: ColorManager.primaryColor,
         splashColor: ColorManager.lightPrimary),
 
     //Elevated Button Theme
@@ -45,22 +46,25 @@ ThemeData getApplicationTheme() {
               color: ColorManager.white,
               fontSize: FontSize.s17,
             ),
-            backgroundColor: ColorManager.primary,
+            backgroundColor: ColorManager.primaryColor,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppSize.s12)))),
 
     //Text Theme
     textTheme: TextTheme(
-      displayLarge:
-          getBoldStyle(color: ColorManager.darkGrey, fontSize: FontSize.s16),
+      displayLarge: getRegularPacificoStyle(
+          color: ColorManager.white, fontSize: FontSize.s30),
       headlineMedium:
-          getRegularStyle(color: ColorManager.darkGrey, fontSize: FontSize.s14),
+          getRegularStyle(color: ColorManager.white, fontSize: FontSize.s16),
       titleMedium:
           getMediumStyle(color: ColorManager.black, fontSize: FontSize.s16),
       bodySmall: getRegularStyle(
         color: ColorManager.grey1,
       ),
-      bodyLarge: getRegularStyle(color: ColorManager.grey),
+      bodyLarge:
+          getRegularStyle(color: ColorManager.black, fontSize: FontSize.s14),
+      labelSmall:
+          getRegularStyle(color: ColorManager.black, fontSize: FontSize.s12),
     ),
 
     dialogTheme: DialogTheme(
@@ -74,10 +78,10 @@ ThemeData getApplicationTheme() {
 
     //Input Decoration Theme
     inputDecorationTheme: InputDecorationTheme(
-      contentPadding: const EdgeInsets.all(AppPadding.p8),
+      contentPadding: const EdgeInsets.all(AppPadding.p20),
       hintStyle: getRegularStyle(
         color: ColorManager.grey,
-        fontSize: FontSize.s14,
+        fontSize: FontSize.s16,
       ),
       labelStyle: getMediumStyle(
         color: ColorManager.grey,
@@ -119,7 +123,7 @@ ThemeData getApplicationTheme() {
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderSide: BorderSide(
-          color: ColorManager.primary,
+          color: ColorManager.primaryColor,
           width: AppSize.s0_5,
         ),
         borderRadius: const BorderRadius.all(

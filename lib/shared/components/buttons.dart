@@ -15,7 +15,7 @@ Widget defaultMaterialButton({
 }) {
   return Container(
     width: width ?? double.infinity,
-    height: height ?? 48,
+    height: height ?? 56,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(radius ?? 8),
       color: color ?? ColorManager.white,
@@ -25,7 +25,7 @@ Widget defaultMaterialButton({
         function();
       },
       child: Text(
-        isUpperCase ? text.toUpperCase() : text,
+        text,
         style: Theme.of(context)
             .textTheme
             .headlineMedium!
