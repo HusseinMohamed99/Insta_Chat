@@ -45,7 +45,9 @@ class SignUpScreen extends StatelessWidget {
             appBar: AppBar(
               automaticallyImplyLeading: false,
               leading: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  pop(context);
+                },
                 icon: const Icon(Icons.arrow_back_ios_new_outlined),
               ),
               title: Text(

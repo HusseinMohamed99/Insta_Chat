@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insta_chat/firebase_options.dart';
 import 'package:insta_chat/shared/bloc_observer.dart';
+import 'package:insta_chat/shared/cubit/reset_password/reset_password_cubit.dart';
 import 'package:insta_chat/shared/cubit/sign_in/sign_in_cubit.dart';
 import 'package:insta_chat/shared/cubit/sign_up/sign_up_cubit.dart';
 import 'package:insta_chat/shared/network/cache_helper.dart';
@@ -33,6 +34,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => SignInCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ResetPasswordCubit(),
         ),
       ],
       child: MaterialApp(
