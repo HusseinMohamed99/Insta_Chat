@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:insta_chat/cubit/main/main_cubit.dart';
+import 'package:insta_chat/cubit/main/main_state.dart';
 import 'package:insta_chat/cubit/reset_password/reset_password_cubit.dart';
 import 'package:insta_chat/cubit/sign_in/sign_in_cubit.dart';
 import 'package:insta_chat/cubit/sign_up/sign_up_cubit.dart';
@@ -22,7 +24,6 @@ void main() async {
   await CacheHelper.init();
   DioHelper.init();
   uId = CacheHelper.getData(key: 'uId');
-  print(uId);
   runApp(const MyApp());
 }
 
@@ -34,6 +35,10 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
+            create: (context) => MainCubit()
+              ..getUserData()
+              ..getAllUsers()),
+        BlocProvider(
           create: (context) => SignUpCubit(),
         ),
         BlocProvider(
@@ -43,11 +48,16 @@ class MyApp extends StatelessWidget {
           create: (context) => ResetPasswordCubit(),
         ),
       ],
-      child: MaterialApp(
-        title: 'Insta Chat',
-        debugShowCheckedModeBanner: false,
-        theme: getApplicationTheme(),
-        home: uId == null ? const SignInScreen() : const HomeScreen(),
+      child: BlocConsumer<MainCubit, MainState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return MaterialApp(
+            title: 'Insta Chat',
+            debugShowCheckedModeBanner: false,
+            theme: getApplicationTheme(),
+            home: uId == null ? const SignInScreen() : const HomeScreen(),
+          );
+        },
       ),
     );
   }

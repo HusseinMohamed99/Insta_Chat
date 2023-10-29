@@ -29,4 +29,5 @@ class AppString {
   static const String agree = "I agree to ";
   static const String userPolicy = "User Policy";
   static const String termUse = "Term of use";
+  static const String conversations = "Conversations";
 }

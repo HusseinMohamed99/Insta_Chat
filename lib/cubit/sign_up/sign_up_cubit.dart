@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:insta_chat/cubit/sign_up/sign_up_state.dart';
-import 'package:insta_chat/image_assets.dart';
 import 'package:insta_chat/model/user_model.dart';
 import 'package:insta_chat/shared/network/cache_helper.dart';
 
@@ -66,7 +65,8 @@ class SignUpCubit extends Cubit<SignUpState> {
       email: email,
       phone: phone,
       uid: uid,
-      image: Assets.imagesAvatar,
+      image:
+          'https://firebasestorage.googleapis.com/v0/b/insta-chat-e6467.appspot.com/o/avatar.svg?alt=media&token=7262ad31-dc1b-416e-b5d9-0f3679643b38',
       bio: 'Write a bio...',
       isEmailVerified: false,
     );

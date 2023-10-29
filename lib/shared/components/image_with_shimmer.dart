@@ -31,7 +31,10 @@ class ImageWithShimmer extends StatelessWidget {
         highlightColor: Colors.grey[800]!,
         child: Container(
           height: height,
-          color: ColorManager.grey,
+          decoration: BoxDecoration(
+            color: ColorManager.grey,
+            borderRadius: BorderRadius.all(Radius.circular(radius ?? 0)),
+          ),
         ),
       ),
       imageBuilder: (context, imageProvider) {
@@ -45,7 +48,7 @@ class ImageWithShimmer extends StatelessWidget {
           ),
         );
       },
-      // errorWidget: (_, __, ___) => SvgPicture.asset(Assets.imagesError),
+      errorWidget: (_, __, ___) => const Icon(Icons.access_alarms_outlined),
     );
   }
 }
