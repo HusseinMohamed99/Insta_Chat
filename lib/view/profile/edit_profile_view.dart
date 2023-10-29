@@ -56,7 +56,7 @@ class EditProfileScreen extends StatelessWidget {
               icon: const Icon(Icons.arrow_back_ios_new_outlined),
             ),
             title: Text(
-              'Profile Screen',
+              'Edit Profile',
               style: Theme.of(context).textTheme.displayLarge,
             ),
           ),

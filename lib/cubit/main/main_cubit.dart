@@ -19,6 +19,7 @@ class MainCubit extends Cubit<MainState> {
     emit(GetUserDataLoadingState());
     FirebaseFirestore.instance.collection('users').doc(uId).get().then((value) {
       userModel = UserModel.fromJson(value.data()!);
+      setUserToken();
       emit(GetUserDataSuccessState());
     }).catchError((error) {
       emit(GetUserDataErrorState(error: error.toString()));
@@ -31,7 +32,7 @@ class MainCubit extends Cubit<MainState> {
     FirebaseFirestore.instance.collection('users').get().then((event) {
       users = [];
       for (var element in event.docs) {
-        if (element.data()['uid'] != uId) {
+        if (element.data()['uId'] != uId) {
           users.add(UserModel.fromJson(element.data()));
         }
       }

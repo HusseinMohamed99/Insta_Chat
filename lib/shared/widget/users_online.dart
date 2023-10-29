@@ -8,7 +8,7 @@ import 'package:insta_chat/shared/components/navigator.dart';
 import 'package:insta_chat/utils/color_manager.dart';
 import 'package:insta_chat/utils/value_manager.dart';
 import 'package:insta_chat/view/chat/chat_view.dart';
-import 'package:insta_chat/view/profile/edit_profile_view.dart';
+import 'package:insta_chat/view/profile/profile_view.dart';
 
 class BuildUsersOnlineItems extends StatelessWidget {
   const BuildUsersOnlineItems({
@@ -23,7 +23,7 @@ class BuildUsersOnlineItems extends StatelessWidget {
         MainCubit.get(context).getUserData();
         navigateTo(
           context,
-          const EditProfileScreen(),
+          const ProfileScreen(),
         );
       },
       child: Container(
