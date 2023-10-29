@@ -9,6 +9,7 @@ import 'package:insta_chat/shared/components/image_with_shimmer.dart';
 import 'package:insta_chat/shared/components/navigator.dart';
 import 'package:insta_chat/shared/widget/users_online.dart';
 import 'package:insta_chat/utils/app_string.dart';
+import 'package:insta_chat/utils/color_manager.dart';
 import 'package:insta_chat/utils/value_manager.dart';
 import 'package:insta_chat/view/profile/edit_profile_view.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -43,42 +44,6 @@ class HomeScreen extends StatelessWidget {
               appBar: AppBar(
                 automaticallyImplyLeading: false,
                 leadingWidth: 120,
-                leading: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: AppPadding.p20),
-                  child: GestureDetector(
-                    onTap: () {
-                      MainCubit.get(context).getUserData();
-                      navigateTo(
-                        context,
-                        const EditProfileScreen(),
-                      );
-                    },
-                    child: CircleAvatar(
-                      radius: 30,
-                      child: cubit.userModel!.image.isNotEmpty
-                          ? ImageWithShimmer(
-                              radius: 30,
-                              imageUrl: cubit.userModel!.image,
-                              width: 60,
-                              height: 60,
-                              boxFit: BoxFit.fill,
-                            )
-                          : CircleAvatar(
-                              radius: 30,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(30),
-                                child: SvgPicture.asset(
-                                  Assets.imagesAvatar,
-                                  width: 60,
-                                  height: 60,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                    ),
-                  ),
-                ),
                 title: Text(
                   AppString.conversations,
                   style: Theme.of(context).textTheme.displayLarge,
@@ -89,17 +54,43 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Expanded(
-                      flex: 1,
-                      child: ListView.separated(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) => BuildUsersOnlineItems(
-                          users: cubit.users[index],
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: AppPadding.p20, vertical: AppPadding.p20),
+                      child: GestureDetector(
+                        onTap: () {
+                          MainCubit.get(context).getUserData();
+                          navigateTo(
+                            context,
+                            const EditProfileScreen(),
+                          );
+                        },
+                        child: CircleAvatar(
+                          backgroundColor: ColorManager.backgroundGreyGrey,
+                          radius: 50,
+                          child: cubit.userModel!.image.isNotEmpty
+                              ? ImageWithShimmer(
+                                  radius: 50,
+                                  imageUrl: cubit.userModel!.image,
+                                  width: 90,
+                                  height: 90,
+                                  boxFit: BoxFit.fill,
+                                )
+                              : CircleAvatar(
+                                  backgroundColor:
+                                      ColorManager.backgroundGreyGrey,
+                                  radius: 50,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: SvgPicture.asset(
+                                      Assets.imagesAvatar,
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
                         ),
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(width: 5),
-                        itemCount: cubit.users.length,
                       ),
                     ),
                     Expanded(
