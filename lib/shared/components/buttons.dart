@@ -14,6 +14,7 @@ Widget defaultMaterialButton({
   Color? textColor,
 }) {
   return Container(
+    alignment: Alignment.center,
     width: width ?? double.infinity,
     height: height ?? 56,
     decoration: BoxDecoration(
@@ -26,6 +27,7 @@ Widget defaultMaterialButton({
       },
       child: Text(
         text,
+        textAlign: TextAlign.center,
         style: Theme.of(context)
             .textTheme
             .headlineMedium!

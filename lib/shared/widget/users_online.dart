@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:insta_chat/cubit/main/main_cubit.dart';
 import 'package:insta_chat/image_assets.dart';
 import 'package:insta_chat/model/user_model.dart';
 import 'package:insta_chat/shared/components/image_with_shimmer.dart';
+import 'package:insta_chat/shared/components/navigator.dart';
 import 'package:insta_chat/utils/color_manager.dart';
 import 'package:insta_chat/utils/value_manager.dart';
+import 'package:insta_chat/view/chat/chat_view.dart';
+import 'package:insta_chat/view/profile/edit_profile_view.dart';
 
 class BuildUsersOnlineItems extends StatelessWidget {
-  const BuildUsersOnlineItems(
-      {super.key, required this.users, required this.gestureDetector});
+  const BuildUsersOnlineItems({
+    super.key,
+    required this.users,
+  });
   final UserModel users;
-  final Function()? gestureDetector;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: gestureDetector,
+      onTap: () {
+        MainCubit.get(context).getUserData();
+        navigateTo(
+          context,
+          const EditProfileScreen(),
+        );
+      },
       child: Container(
-        width: 70,
+        width: 80,
         margin: const EdgeInsetsDirectional.all(AppPadding.p12),
         child: Column(
           children: [
@@ -75,8 +86,13 @@ class BuildUsersItems extends StatelessWidget {
   final UserModel users;
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
+    return GestureDetector(
+      onTap: () {
+        navigateTo(
+          context,
+          const ChatScreen(),
+        );
+      },
       child: Padding(
         padding: const EdgeInsets.all(AppPadding.p12),
         child: Row(

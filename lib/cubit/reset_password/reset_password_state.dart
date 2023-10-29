@@ -1,3 +1,9 @@
-abstract class ResetPasswordState {}
+abstract class ResetPasswordStates {}
 
-final class ResetPasswordInitial extends ResetPasswordState {}
+class ResetPasswordInitialState extends ResetPasswordStates {}
+
+class ResetPasswordLoadingState extends ResetPasswordStates {}
+
+class ResetPasswordSuccessState extends ResetPasswordStates {}
+
+class ResetPasswordErrorState extends ResetPasswordStates {}
