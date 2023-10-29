@@ -256,6 +256,13 @@ class EditProfileScreen extends StatelessWidget {
         name: nameController.text,
         bio: bioController.text,
       );
+    } else {
+      cubit.updateUserData(
+        email: emailController.text,
+        phone: phoneController.text,
+        name: nameController.text,
+        bio: bioController.text,
+      );
     }
   }
 }

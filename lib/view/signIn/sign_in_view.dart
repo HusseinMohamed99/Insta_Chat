@@ -13,7 +13,7 @@ import 'package:insta_chat/utils/app_string.dart';
 import 'package:insta_chat/utils/color_manager.dart';
 import 'package:insta_chat/utils/my_validators.dart';
 import 'package:insta_chat/utils/value_manager.dart';
-import 'package:insta_chat/view/home/home_view.dart';
+import 'package:insta_chat/view/onBoard/on_board_view.dart';
 import 'package:insta_chat/view/signUp/sign_up_view.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -40,7 +40,7 @@ class SignInScreen extends StatelessWidget {
             CacheHelper.saveData(value: state.uid, key: 'uId');
             showToast(text: 'Sign In Successfully', state: ToastStates.success);
             uId = state.uid;
-            navigateAndFinish(context, const HomeScreen());
+            navigateAndFinish(context, const OnBoardScreen());
           }
 
           if (state is SignInErrorState) {

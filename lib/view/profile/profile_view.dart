@@ -77,12 +77,24 @@ class ProfileScreen extends StatelessWidget {
                         child: Text(
                           mainCubit.userModel!.name,
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.titleLarge,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayLarge!
+                              .copyWith(color: ColorManager.black),
                         ),
                       ),
                       SliverToBoxAdapter(
                         child: Text(
                           mainCubit.userModel!.email,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: Text(
+                          mainCubit.userModel!.bio,
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
@@ -100,7 +112,7 @@ class ProfileScreen extends StatelessWidget {
                               onTap: () async {
                                 String url = mainCubit.userModel!.phone;
                                 await urlLauncher(
-                                    Uri.parse('http://wa.me/$url'));
+                                    Uri.parse('http://wa.me/+2$url'));
                               },
                               child: CircleAvatar(
                                 backgroundColor: ColorManager.primaryColor,
@@ -115,7 +127,7 @@ class ProfileScreen extends StatelessWidget {
                             GestureDetector(
                               onTap: () async {
                                 String number = mainCubit.userModel!.phone;
-                                await urlLauncher(Uri.parse('tel://$number'));
+                                await urlLauncher(Uri.parse('tel://+2$number'));
 
                                 await FlutterPhoneDirectCaller.callNumber(
                                     number);
