@@ -20,11 +20,13 @@ class BuildUsersItems extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              MainCubit.get(context).getUserData();
               navigateTo(
                 context,
-                const ProfileScreen(),
+                ProfileScreen(
+                  userModel: users,
+                ),
               );
+              MainCubit.get(context).getUserData();
             },
             child: CircleAvatar(
               radius: 30,

@@ -142,7 +142,7 @@ class MainCubit extends Cubit<MainState> {
   void sendMessage({
     required String receiverId,
     required String messageId,
-    required DateTime dateTime,
+    required String dateTime,
     String? text,
     String? messageImage,
   }) {
@@ -153,6 +153,7 @@ class MainCubit extends Cubit<MainState> {
       text: text ?? '',
       senderId: userModel!.uid,
       messageImage: messageImage ?? '',
+      time: FieldValue.serverTimestamp(),
     );
     FirebaseFirestore.instance
         .collection('users')
@@ -190,7 +191,7 @@ class MainCubit extends Cubit<MainState> {
         .collection('chat')
         .doc(receiverId)
         .collection('message')
-        .orderBy('dateTime')
+        .orderBy('time')
         .snapshots()
         .listen((event) {
       message = [];
@@ -220,7 +221,7 @@ class MainCubit extends Cubit<MainState> {
   void uploadMessageImage({
     required String receiverId,
     required String messageId,
-    required DateTime dateTime,
+    required String dateTime,
     String? text,
   }) {
     emit(UploadMessageImageLoadingState());

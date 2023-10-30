@@ -63,11 +63,6 @@ Widget imagePreview(String? image, {double? height}) {
   );
 }
 
-// double intToDouble(int num) {
-//   double doubleNum = num.toDouble();
-//   return doubleNum;
-// }
-
 Future<void> urlLauncher(Uri url) async {
   if (!await launchUrl(url)) {
     throw Exception('${''}$url');

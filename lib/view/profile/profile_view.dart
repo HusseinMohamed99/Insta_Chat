@@ -5,19 +5,20 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:insta_chat/cubit/main/main_cubit.dart';
 import 'package:insta_chat/cubit/main/main_state.dart';
 import 'package:insta_chat/image_assets.dart';
+import 'package:insta_chat/model/user_model.dart';
 import 'package:insta_chat/shared/components/constants.dart';
 import 'package:insta_chat/utils/color_manager.dart';
 import 'package:insta_chat/utils/value_manager.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen({super.key, required this.userModel});
+  final UserModel userModel;
 
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.sizeOf(context).width;
     final double screenHeight = MediaQuery.sizeOf(context).height;
 
-    MainCubit mainCubit = MainCubit.get(context);
     return BlocConsumer<MainCubit, MainState>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -44,7 +45,7 @@ class ProfileScreen extends StatelessWidget {
                 child: CircleAvatar(
                   radius: 50,
                   child: imageWithShimmer(
-                    mainCubit.userModel!.image,
+                    userModel.image,
                     radius: 75,
                   ),
                 ),
@@ -75,7 +76,7 @@ class ProfileScreen extends StatelessWidget {
                     slivers: [
                       SliverToBoxAdapter(
                         child: Text(
-                          mainCubit.userModel!.name,
+                          userModel.name,
                           textAlign: TextAlign.center,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
@@ -87,14 +88,14 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       SliverToBoxAdapter(
                         child: Text(
-                          mainCubit.userModel!.email,
+                          userModel.email,
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
                       SliverToBoxAdapter(
                         child: Text(
-                          mainCubit.userModel!.bio,
+                          userModel.bio,
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
@@ -110,7 +111,7 @@ class ProfileScreen extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () async {
-                                String url = mainCubit.userModel!.phone;
+                                String url = userModel.phone;
                                 await urlLauncher(
                                     Uri.parse('http://wa.me/+2$url'));
                               },
@@ -126,7 +127,7 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () async {
-                                String number = mainCubit.userModel!.phone;
+                                String number = userModel.phone;
                                 await urlLauncher(Uri.parse('tel://+2$number'));
 
                                 await FlutterPhoneDirectCaller.callNumber(
@@ -144,7 +145,7 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () async {
-                                String url = mainCubit.userModel!.email;
+                                String url = userModel.email;
                                 await urlLauncher(Uri.parse('mailto:$url'));
                               },
                               child: CircleAvatar(

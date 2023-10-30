@@ -135,6 +135,41 @@ class ChatScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                const SizedBox(height: 20),
+                if (mainCubit.messageImagePicked != null)
+                  Stack(
+                    alignment: AlignmentDirectional.topEnd,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 170,
+                        decoration: BoxDecoration(
+                          color: ColorManager.backgroundGreyGrey,
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(4),
+                            topRight: Radius.circular(4),
+                          ),
+                          image: DecorationImage(
+                            fit: BoxFit.fitHeight,
+                            image: FileImage(mainCubit.messageImagePicked!),
+                          ),
+                        ),
+                      ),
+                      CircleAvatar(
+                        radius: 20,
+                        backgroundColor: ColorManager.primaryColor,
+                        child: IconButton(
+                          onPressed: () {
+                            mainCubit.removeMessageImage();
+                          },
+                          icon: Icon(
+                            Icons.close_outlined,
+                            color: ColorManager.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 Form(
                   key: formKey,
                   child: Row(
@@ -149,6 +184,8 @@ class ChatScreen extends StatelessWidget {
                           decoration: InputDecoration(
                             hintText: 'message',
                             border: InputBorder.none,
+                            filled: true,
+                            fillColor: ColorManager.backgroundGreyGrey,
                             prefixIcon: IconButton(
                               onPressed: () {},
                               icon: Icon(
@@ -182,41 +219,27 @@ class ChatScreen extends StatelessWidget {
                           },
                         ),
                       ),
-                      Container(
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      SizedBox(
+                        width: 50,
+                        height: 50,
                         child: MaterialButton(
-                          minWidth: 1,
+                          padding: const EdgeInsets.all(0),
+                          color: ColorManager.primaryColor,
                           onPressed: () {
-                            if (mainCubit.messageImagePicked == null &&
-                                formKey.currentState!.validate()) {
-                              mainCubit.sendMessage(
-                                receiverId: userModel.uid,
-                                dateTime: DateTime.now(),
-                                text: textController.text,
-                                messageId: uuid.v4(),
-                              );
-                              textController.clear();
-                            } else if (mainCubit.messageImagePicked != null) {
-                              MainCubit.get(context).uploadMessageImage(
-                                receiverId: userModel.uid,
-                                dateTime: DateTime.now(),
-                                text: textController.text,
-                                messageId: uuid.v4(),
-                              );
-                              textController.clear();
-                              mainCubit.removeMessageImage();
-                            } else {}
-                            mainCubit.sendFCMNotification(
-                              senderName: mainCubit.userModel!.name,
-                              messageText: textController.text,
-                              messageImage: mainCubit.imageURL,
-                              token: userModel.token,
+                            sendMessageMethod(
+                              mainCubit,
+                              formKey,
+                              textController,
+                              uuid,
+                              context,
                             );
                           },
-                          child: const Icon(
-                            Icons.send,
+                          child: Icon(
+                            Icons.upload_outlined,
+                            color: ColorManager.white,
                           ),
                         ),
                       ),
@@ -231,7 +254,34 @@ class ChatScreen extends StatelessWidget {
     );
   }
 
-  void sendMessageMethod(MainCubit cubit, Uuid uuid, BuildContext context) {}
+  void sendMessageMethod(MainCubit mainCubit, GlobalKey<FormState> formKey,
+      TextEditingController textController, Uuid uuid, BuildContext context) {
+    if (mainCubit.messageImagePicked == null &&
+        formKey.currentState!.validate()) {
+      mainCubit.sendMessage(
+        receiverId: userModel.uid,
+        dateTime: DateTime.now().toString(),
+        text: textController.text,
+        messageId: uuid.v4(),
+      );
+      textController.clear();
+    } else if (mainCubit.messageImagePicked != null) {
+      MainCubit.get(context).uploadMessageImage(
+        receiverId: userModel.uid,
+        dateTime: DateTime.now().toString(),
+        text: textController.text,
+        messageId: uuid.v4(),
+      );
+      textController.clear();
+      mainCubit.removeMessageImage();
+    } else {}
+    mainCubit.sendFCMNotification(
+      senderName: mainCubit.userModel!.name,
+      messageText: textController.text,
+      messageImage: mainCubit.imageURL,
+      token: userModel.token,
+    );
+  }
 }
 
 class BuildOwnMessages extends StatelessWidget {

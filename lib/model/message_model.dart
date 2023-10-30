@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class MessageModel {
   String? messageId;
   String? senderId;
   String? receiverId;
-  DateTime? dateTime;
+  String? dateTime;
   String? text;
   String? messageImage;
+  FieldValue? time;
 
   MessageModel({
     this.senderId,
@@ -13,13 +16,14 @@ class MessageModel {
     this.text,
     this.messageId,
     this.messageImage,
+    this.time,
   });
 
   factory MessageModel.fromJson(Map<String, dynamic> json) {
     return MessageModel(
       senderId: json['senderId'],
       receiverId: json['receiverId'],
-      dateTime: DateTime.fromMillisecondsSinceEpoch(json['dateTime']),
+      dateTime: json['dateTime'],
       text: json['text'],
       messageId: json['messageId'],
       messageImage: json['messageImage'],
@@ -29,11 +33,12 @@ class MessageModel {
   Map<String, dynamic> toMap() {
     return {
       'text': text,
-      'dateTime': dateTime!.millisecondsSinceEpoch,
+      'dateTime': dateTime,
       'receiverId': receiverId,
       'senderId': senderId,
       'messageId': messageId,
       'messageImage': messageImage,
+      'time': time
     };
   }
 }
