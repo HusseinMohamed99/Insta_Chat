@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
           create: (context) => ResetPasswordCubit(),
         ),
         BlocProvider(
-          create: (BuildContext context) => EmailVerificationCubit(),
+          create: (context) => EmailVerificationCubit(),
         ),
       ],
       child: BlocConsumer<MainCubit, MainState>(
