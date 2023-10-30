@@ -3,68 +3,89 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:insta_chat/cubit/main/main_cubit.dart';
 import 'package:insta_chat/cubit/main/main_state.dart';
+import 'package:insta_chat/image_assets.dart';
+import 'package:insta_chat/model/message_model.dart';
+import 'package:insta_chat/model/user_model.dart';
 import 'package:insta_chat/shared/components/constants.dart';
+import 'package:insta_chat/shared/components/indicator.dart';
 import 'package:insta_chat/utils/color_manager.dart';
 import 'package:insta_chat/utils/value_manager.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:uuid/uuid.dart';
 
 class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key});
-
+  ChatScreen({super.key, required this.userModel});
+  final UserModel userModel;
+  final textController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.sizeOf(context).width;
     final double screenHeight = MediaQuery.sizeOf(context).height;
     MainCubit mainCubit = MainCubit.get(context);
 
+    Uuid uuid = const Uuid();
     return BlocConsumer<MainCubit, MainState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is SendMessageSuccessState) {
+          if (mainCubit.messageImagePicked != null) {
+            mainCubit.removeMessageImage();
+          }
+
+          textController.clear();
+        }
+      },
       builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.arrow_back_ios_new_outlined),
-            ),
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                CircleAvatar(
-                  backgroundColor: ColorManager.dividerColor,
-                  radius: 20,
-                  child: CircleAvatar(
-                    radius: 18,
-                    child: imageWithShimmer(
-                      mainCubit.userModel!.image,
-                      radius: 75,
+        mainCubit.getMessage(
+          receiverId: userModel.uid,
+        );
+        return ModalProgressHUD(
+          inAsyncCall: state is UploadMessageImageLoadingState,
+          progressIndicator: const AdaptiveIndicator(),
+          child: Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.arrow_back_ios_new_outlined),
+              ),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: ColorManager.dividerColor,
+                    radius: 20,
+                    child: CircleAvatar(
+                      radius: 18,
+                      child: imageWithShimmer(
+                        mainCubit.userModel!.image,
+                        radius: 75,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: AppSize.s20),
-                Text(
-                  mainCubit.userModel!.name,
-                  style: Theme.of(context).textTheme.displayLarge,
-                ),
-                const Spacer(),
-                IconButton(
-                  onPressed: () async {
-                    String number = mainCubit.userModel!.phone;
-                    await urlLauncher(Uri.parse('tel://+2$number'));
-                    await FlutterPhoneDirectCaller.callNumber(number);
-                  },
-                  icon: const Icon(Icons.call),
-                ),
-              ],
+                  const SizedBox(width: AppSize.s20),
+                  Text(
+                    mainCubit.userModel!.name,
+                    style: Theme.of(context).textTheme.displayLarge,
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () async {
+                      String number = mainCubit.userModel!.phone;
+                      await urlLauncher(Uri.parse('tel://+2$number'));
+                      await FlutterPhoneDirectCaller.callNumber(number);
+                    },
+                    icon: const Icon(Icons.call),
+                  ),
+                ],
+              ),
             ),
-          ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 5,
-                child: Container(
+            body: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: AppPadding.p20,
                     vertical: AppPadding.p20,
@@ -72,6 +93,12 @@ class ChatScreen extends StatelessWidget {
                   width: screenWidth,
                   height: screenHeight,
                   decoration: ShapeDecoration(
+                    image: const DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage(
+                        Assets.imagesBackgroundImage,
+                      ),
+                    ),
                     color: ColorManager.white,
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
@@ -87,24 +114,126 @@ class ChatScreen extends StatelessWidget {
                     slivers: [
                       SliverList(
                         delegate: SliverChildBuilderDelegate(
-                          (context, index) => const BuildOwnMessages(),
-                          childCount: 1,
-                        ),
-                      ),
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) => const BuildFriendMessages(),
-                          childCount: 1,
+                          (context, index) {
+                            MessageModel message = mainCubit.message[index];
+                            if (mainCubit.userModel!.uid == message.senderId) {
+                              return BuildOwnMessages(
+                                messageModel: message,
+                              );
+                            } else {
+                              return BuildFriendMessages(
+                                messageModel: message,
+                              );
+                            }
+                          },
+                          childCount: mainCubit.message.length,
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
+                Container(
+                  width: double.infinity,
+                  height: 74,
+                  padding: const EdgeInsets.all(AppPadding.p12),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: ColorManager.white,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          textAlignVertical: TextAlignVertical.center,
+                          maxLines: 3,
+                          minLines: 1,
+                          controller: textController,
+                          keyboardType: TextInputType.multiline,
+                          decoration: InputDecoration(
+                            hintText: 'message',
+                            border: InputBorder.none,
+                            prefixIcon: IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.emoji_emotions_outlined,
+                                size: 20,
+                                color: ColorManager.grey,
+                              ),
+                            ),
+                            suffixIcon: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    mainCubit.getMessageImage();
+                                  },
+                                  icon: Icon(
+                                    Icons.camera,
+                                    size: 24,
+                                    color: ColorManager.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          validator: (String? value) {
+                            if (value!.isEmpty) {
+                              return 'message';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: MaterialButton(
+                          minWidth: 1,
+                          onPressed: () {
+                            sendMessageMethod(mainCubit, uuid, context);
+                          },
+                          child: const Icon(
+                            Icons.send,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
+    );
+  }
+
+  void sendMessageMethod(MainCubit cubit, Uuid uuid, BuildContext context) {
+    if (cubit.messageImagePicked == null && formKey.currentState!.validate()) {
+      cubit.sendMessage(
+        receiverId: userModel.uid,
+        dateTime: DateTime.now(),
+        text: textController.text,
+        messageId: uuid.v4(),
+      );
+      textController.clear();
+    } else if (cubit.messageImagePicked != null) {
+      MainCubit.get(context).uploadMessageImage(
+        receiverId: userModel.uid,
+        dateTime: DateTime.now(),
+        text: textController.text,
+        messageId: uuid.v4(),
+      );
+      textController.clear();
+      cubit.removeMessageImage();
+    } else {}
+    cubit.sendFCMNotification(
+      senderName: cubit.userModel!.name,
+      messageText: textController.text,
+      messageImage: cubit.imageURL,
+      token: userModel.token,
     );
   }
 }
@@ -112,18 +241,73 @@ class ChatScreen extends StatelessWidget {
 class BuildOwnMessages extends StatelessWidget {
   const BuildOwnMessages({
     super.key,
+    required this.messageModel,
   });
+  final MessageModel messageModel;
 
+  @override
+  Widget build(BuildContext context) {
+    if (messageModel.messageImage == '') {
+      return Align(
+        alignment: Alignment.centerRight,
+        child: Container(
+          padding: const EdgeInsets.all(AppPadding.p16),
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: ColorManager.primaryColor,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(AppSize.s28),
+              topRight: Radius.circular(AppSize.s28),
+              bottomLeft: Radius.circular(AppSize.s28),
+            ),
+          ),
+          child: Text(
+            'Hello',
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge!
+                .copyWith(color: ColorManager.white),
+          ),
+        ),
+      );
+    } else {
+      return Align(
+        alignment: Alignment.centerRight,
+        child: Container(
+          padding: const EdgeInsets.all(AppPadding.p16),
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: ColorManager.primaryColor,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(AppSize.s28),
+              topRight: Radius.circular(AppSize.s28),
+              bottomLeft: Radius.circular(AppSize.s28),
+            ),
+          ),
+          child: imagePreview(
+            '${messageModel.messageImage}',
+          ),
+        ),
+      );
+    }
+  }
+}
+
+class BuildFriendMessages extends StatelessWidget {
+  const BuildFriendMessages({
+    super.key,
+    required this.messageModel,
+  });
+  final MessageModel messageModel;
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
-        padding:
-            const EdgeInsets.only(left: 16, top: 32, bottom: 32, right: 32),
+        padding: const EdgeInsets.all(AppPadding.p16),
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: ColorManager.primaryColor,
+          color: ColorManager.secondaryPrimaryColor,
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(AppSize.s28),
             topRight: Radius.circular(AppSize.s28),
@@ -135,40 +319,7 @@ class BuildOwnMessages extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .titleLarge!
-              .copyWith(color: ColorManager.white),
-        ),
-      ),
-    );
-  }
-}
-
-class BuildFriendMessages extends StatelessWidget {
-  const BuildFriendMessages({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: Container(
-        padding:
-            const EdgeInsets.only(left: 16, top: 32, bottom: 32, right: 32),
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: ColorManager.primaryColor,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(AppSize.s28),
-            topRight: Radius.circular(AppSize.s28),
-            bottomLeft: Radius.circular(AppSize.s28),
-          ),
-        ),
-        child: Text(
-          'Hello',
-          style: Theme.of(context)
-              .textTheme
-              .titleLarge!
-              .copyWith(color: ColorManager.white),
+              .copyWith(color: ColorManager.black),
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:insta_chat/cubit/email_verification/email_verification_cubit.dart';
 import 'package:insta_chat/cubit/main/main_cubit.dart';
 import 'package:insta_chat/cubit/main/main_state.dart';
 import 'package:insta_chat/cubit/reset_password/reset_password_cubit.dart';
@@ -24,6 +25,7 @@ void main() async {
   await CacheHelper.init();
   DioHelper.init();
   uId = CacheHelper.getData(key: 'uId');
+  print(uId);
   runApp(const MyApp());
 }
 
@@ -51,6 +53,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ResetPasswordCubit(),
+        ),
+        BlocProvider(
+          create: (BuildContext context) => EmailVerificationCubit(),
         ),
       ],
       child: BlocConsumer<MainCubit, MainState>(

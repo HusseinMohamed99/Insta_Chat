@@ -13,6 +13,7 @@ import 'package:insta_chat/utils/app_string.dart';
 import 'package:insta_chat/utils/color_manager.dart';
 import 'package:insta_chat/utils/my_validators.dart';
 import 'package:insta_chat/utils/value_manager.dart';
+import 'package:insta_chat/view/email_verification/email_verification_view.dart';
 import 'package:insta_chat/view/signIn/sign_in_view.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -45,6 +46,10 @@ class SignUpScreen extends StatelessWidget {
           if (state is SignUpSuccessState) {
             CacheHelper.saveData(value: state.userModel.uid, key: 'uId');
             showToast(text: 'SignUpSuccessState', state: ToastStates.success);
+            navigateAndFinish(
+              context,
+              const EmailVerificationScreen(),
+            );
           }
           if (state is SignUpErrorState) {
             showToast(text: state.error, state: ToastStates.error);

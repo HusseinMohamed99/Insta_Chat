@@ -88,7 +88,7 @@ class EditProfileScreen extends StatelessWidget {
                     bottom: 5,
                     right: 0,
                     child: CircleAvatar(
-                      backgroundColor: ColorManager.darkGrey,
+                      backgroundColor: ColorManager.black,
                       radius: 20,
                       child: IconButton(
                         onPressed: () {

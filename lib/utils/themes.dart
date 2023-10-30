@@ -10,7 +10,7 @@ ThemeData getApplicationTheme() {
     primaryColor: ColorManager.primaryColor,
     primaryColorLight: ColorManager.lightPrimary,
     primaryColorDark: ColorManager.darkPrimary,
-    disabledColor: ColorManager.grey1,
+    disabledColor: ColorManager.grey,
     splashColor: ColorManager.lightPrimary,
     scaffoldBackgroundColor: ColorManager.primaryColor,
 
@@ -35,7 +35,7 @@ ThemeData getApplicationTheme() {
     //Button Theme
     buttonTheme: ButtonThemeData(
         shape: const StadiumBorder(),
-        disabledColor: ColorManager.grey1,
+        disabledColor: ColorManager.grey,
         buttonColor: ColorManager.primaryColor,
         splashColor: ColorManager.lightPrimary),
 
@@ -59,7 +59,7 @@ ThemeData getApplicationTheme() {
       titleMedium:
           getMediumStyle(color: ColorManager.black, fontSize: FontSize.s16),
       bodySmall: getRegularStyle(
-        color: ColorManager.grey1,
+        color: ColorManager.grey,
       ),
       headlineLarge:
           getMediumStyle(color: ColorManager.black, fontSize: FontSize.s30),

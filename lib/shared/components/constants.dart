@@ -49,18 +49,18 @@ Widget imageWithShimmer(
   );
 }
 
-// Widget imagePreview(String? image, {double? height}) {
-//   return FullScreenWidget(
-//     child: Center(
-//       child: ImageWithShimmer(
-//         boxFit: BoxFit.fitWidth,
-//         width: double.infinity,
-//         imageUrl: "$image",
-//         height: height,
-//       ),
-//     ),
-//   );
-// }
+Widget imagePreview(String? image, {double? height}) {
+  return FullScreenWidget(
+    child: Center(
+      child: ImageWithShimmer(
+        boxFit: BoxFit.fitWidth,
+        width: double.infinity,
+        imageUrl: "$image",
+        height: height,
+      ),
+    ),
+  );
+}
 
 // double intToDouble(int num) {
 //   double doubleNum = num.toDouble();

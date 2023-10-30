@@ -64,7 +64,9 @@ class BuildUsersItems extends StatelessWidget {
             onPressed: () {
               navigateTo(
                 context,
-                const ChatScreen(),
+                ChatScreen(
+                  userModel: users,
+                ),
               );
             },
             label: Text(

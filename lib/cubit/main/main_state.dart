@@ -35,3 +35,25 @@ class UploadProfileImageErrorState extends MainState {}
 class UpdateUserSuccessState extends MainState {}
 
 class UpdateUserErrorState extends MainState {}
+
+class SendMessageSuccessState extends MainState {}
+
+class SendMessageErrorState extends MainState {}
+
+class GetMessageSuccessState extends MainState {}
+
+class MessageImagePickedSuccessState extends MainState {}
+
+class MessageImagePickedErrorState extends MainState {}
+
+class DeleteMessageImageSuccessState extends MainState {}
+
+class UploadMessageImageLoadingState extends MainState {}
+
+class UploadMessageImageErrorState extends MainState {}
+
+class SendFCMNotificationSuccessState extends MainState {}
+
+class SendInAppNotificationLoadingState extends MainState {}
+
+class SetNotificationIdSuccessState extends MainState {}
