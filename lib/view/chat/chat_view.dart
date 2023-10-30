@@ -14,15 +14,15 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:uuid/uuid.dart';
 
 class ChatScreen extends StatelessWidget {
-  ChatScreen({super.key, required this.userModel});
+  const ChatScreen({super.key, required this.userModel});
   final UserModel userModel;
-  final textController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.sizeOf(context).width;
     final double screenHeight = MediaQuery.sizeOf(context).height;
     MainCubit mainCubit = MainCubit.get(context);
+    final formKey = GlobalKey<FormState>();
+    final textController = TextEditingController();
 
     Uuid uuid = const Uuid();
     return BlocConsumer<MainCubit, MainState>(
@@ -62,13 +62,16 @@ class ChatScreen extends StatelessWidget {
                       child: imageWithShimmer(
                         mainCubit.userModel!.image,
                         radius: 75,
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
                   const SizedBox(width: AppSize.s20),
-                  Text(
-                    mainCubit.userModel!.name,
-                    style: Theme.of(context).textTheme.displayLarge,
+                  Expanded(
+                    child: Text(
+                      mainCubit.userModel!.name,
+                      style: Theme.of(context).textTheme.displayLarge,
+                    ),
                   ),
                   const Spacer(),
                   IconButton(
@@ -132,14 +135,8 @@ class ChatScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                Container(
-                  width: double.infinity,
-                  height: 74,
-                  padding: const EdgeInsets.all(AppPadding.p12),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: ColorManager.white,
-                  ),
+                Form(
+                  key: formKey,
                   child: Row(
                     children: [
                       Expanded(
@@ -192,7 +189,31 @@ class ChatScreen extends StatelessWidget {
                         child: MaterialButton(
                           minWidth: 1,
                           onPressed: () {
-                            sendMessageMethod(mainCubit, uuid, context);
+                            if (mainCubit.messageImagePicked == null &&
+                                formKey.currentState!.validate()) {
+                              mainCubit.sendMessage(
+                                receiverId: userModel.uid,
+                                dateTime: DateTime.now(),
+                                text: textController.text,
+                                messageId: uuid.v4(),
+                              );
+                              textController.clear();
+                            } else if (mainCubit.messageImagePicked != null) {
+                              MainCubit.get(context).uploadMessageImage(
+                                receiverId: userModel.uid,
+                                dateTime: DateTime.now(),
+                                text: textController.text,
+                                messageId: uuid.v4(),
+                              );
+                              textController.clear();
+                              mainCubit.removeMessageImage();
+                            } else {}
+                            mainCubit.sendFCMNotification(
+                              senderName: mainCubit.userModel!.name,
+                              messageText: textController.text,
+                              messageImage: mainCubit.imageURL,
+                              token: userModel.token,
+                            );
                           },
                           child: const Icon(
                             Icons.send,
@@ -210,32 +231,7 @@ class ChatScreen extends StatelessWidget {
     );
   }
 
-  void sendMessageMethod(MainCubit cubit, Uuid uuid, BuildContext context) {
-    if (cubit.messageImagePicked == null && formKey.currentState!.validate()) {
-      cubit.sendMessage(
-        receiverId: userModel.uid,
-        dateTime: DateTime.now(),
-        text: textController.text,
-        messageId: uuid.v4(),
-      );
-      textController.clear();
-    } else if (cubit.messageImagePicked != null) {
-      MainCubit.get(context).uploadMessageImage(
-        receiverId: userModel.uid,
-        dateTime: DateTime.now(),
-        text: textController.text,
-        messageId: uuid.v4(),
-      );
-      textController.clear();
-      cubit.removeMessageImage();
-    } else {}
-    cubit.sendFCMNotification(
-      senderName: cubit.userModel!.name,
-      messageText: textController.text,
-      messageImage: cubit.imageURL,
-      token: userModel.token,
-    );
-  }
+  void sendMessageMethod(MainCubit cubit, Uuid uuid, BuildContext context) {}
 }
 
 class BuildOwnMessages extends StatelessWidget {
@@ -262,7 +258,7 @@ class BuildOwnMessages extends StatelessWidget {
             ),
           ),
           child: Text(
-            'Hello',
+            '${messageModel.text}',
             style: Theme.of(context)
                 .textTheme
                 .titleLarge!
@@ -274,7 +270,9 @@ class BuildOwnMessages extends StatelessWidget {
       return Align(
         alignment: Alignment.centerRight,
         child: Container(
-          padding: const EdgeInsets.all(AppPadding.p16),
+          width: 250,
+          height: 200,
+          padding: const EdgeInsets.all(AppPadding.p12),
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
             color: ColorManager.primaryColor,
@@ -315,7 +313,7 @@ class BuildFriendMessages extends StatelessWidget {
           ),
         ),
         child: Text(
-          'Hello',
+          '${messageModel.text}',
           style: Theme.of(context)
               .textTheme
               .titleLarge!

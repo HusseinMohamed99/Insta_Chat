@@ -54,7 +54,7 @@ Widget imagePreview(String? image, {double? height}) {
   return FullScreenWidget(
     child: Center(
       child: ImageWithShimmer(
-        boxFit: BoxFit.fitWidth,
+        boxFit: BoxFit.fill,
         width: double.infinity,
         imageUrl: "$image",
         height: height,
