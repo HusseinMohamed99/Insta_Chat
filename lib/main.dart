@@ -25,7 +25,6 @@ void main() async {
   await CacheHelper.init();
   DioHelper.init();
   uId = CacheHelper.getData(key: 'uId');
-  print(uId);
   runApp(const MyApp());
 }
 
