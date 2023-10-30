@@ -48,158 +48,166 @@ class SignInScreen extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          return Scaffold(
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              leading: IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.arrow_back_ios_new_outlined),
-              ),
-              title: Text(
-                AppString.signIn,
-                style: Theme.of(context).textTheme.displayLarge,
-              ),
+          return AnnotatedRegion<SystemUiOverlayStyle>(
+            value: const SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+              statusBarIconBrightness: Brightness.dark,
             ),
-            body: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 28, left: 40, right: 40, bottom: 54),
-                  child: Text(
-                    AppString.signInHint,
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
+            child: Scaffold(
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                leading: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.arrow_back_ios_new_outlined),
                 ),
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppPadding.p40,
-                      vertical: AppPadding.p60,
+                title: Text(
+                  AppString.signIn,
+                  style: Theme.of(context).textTheme.displayLarge,
+                ),
+              ),
+              body: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 28, left: 40, right: 40, bottom: 54),
+                    child: Text(
+                      AppString.signInHint,
+                      style: Theme.of(context).textTheme.headlineMedium,
                     ),
-                    width: screenWidth,
-                    decoration: const ShapeDecoration(
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(50),
-                          topRight: Radius.circular(50),
+                  ),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: AppPadding.p40,
+                        vertical: AppPadding.p60,
+                      ),
+                      width: screenWidth,
+                      decoration: const ShapeDecoration(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(50),
+                            topRight: Radius.circular(50),
+                          ),
                         ),
                       ),
-                    ),
-                    child: Form(
-                      key: formKey,
-                      child: CustomScrollView(
-                        physics: const BouncingScrollPhysics(),
-                        keyboardDismissBehavior:
-                            ScrollViewKeyboardDismissBehavior.onDrag,
-                        slivers: [
-                          SliverToBoxAdapter(
-                            child: CustomTextFormField(
-                              prefixIcon: Icons.email_outlined,
-                              controller: emailController,
-                              focusNode: emailFocusNode,
-                              textInputAction: TextInputAction.next,
-                              hintText: AppString.email,
-                              textInputType: TextInputType.emailAddress,
-                              validator: (value) {
-                                return MyValidators.emailValidator(value);
-                              },
-                              onFieldSubmitted: (value) {
-                                FocusScope.of(context)
-                                    .requestFocus(passwordFocusNode);
-                              },
-                            ),
-                          ),
-                          const SliverToBoxAdapter(child: SizedBox(height: 28)),
-                          SliverToBoxAdapter(
-                            child: CustomTextFormField(
-                              controller: passwordController,
-                              focusNode: passwordFocusNode,
-                              textInputType: TextInputType.visiblePassword,
-                              prefixIcon: Icons.key,
-                              suffixIcon: signInCubit.suffix,
-                              obscureText: signInCubit.isPassword,
-                              suffixIconOnTap: () {
-                                signInCubit.changePassword();
-                              },
-                              validator: (value) {
-                                return MyValidators.passwordValidator(value);
-                              },
-                              hintText: AppString.password,
-                              textInputAction: TextInputAction.next,
-                              onFieldSubmitted: (value) {},
-                            ),
-                          ),
-                          SliverToBoxAdapter(
-                            child: Align(
-                              alignment: Alignment.bottomLeft,
-                              child: defaultTextButton(
-                                function: () {
-                                  // navigateTo(context, const ResetPasswordScreen());
+                      child: Form(
+                        key: formKey,
+                        child: CustomScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          keyboardDismissBehavior:
+                              ScrollViewKeyboardDismissBehavior.onDrag,
+                          slivers: [
+                            SliverToBoxAdapter(
+                              child: CustomTextFormField(
+                                prefixIcon: Icons.email_outlined,
+                                controller: emailController,
+                                focusNode: emailFocusNode,
+                                textInputAction: TextInputAction.next,
+                                hintText: AppString.email,
+                                textInputType: TextInputType.emailAddress,
+                                validator: (value) {
+                                  return MyValidators.emailValidator(value);
                                 },
-                                text: '${AppString.forgotPassword}?',
-                                context: context,
-                                color: ColorManager.primaryColor,
-                                fontSize: 14,
+                                onFieldSubmitted: (value) {
+                                  FocusScope.of(context)
+                                      .requestFocus(passwordFocusNode);
+                                },
                               ),
                             ),
-                          ),
-                          SliverToBoxAdapter(
-                            child: SizedBox(
-                              height: screenHeight * .15,
+                            const SliverToBoxAdapter(
+                                child: SizedBox(height: 28)),
+                            SliverToBoxAdapter(
+                              child: CustomTextFormField(
+                                controller: passwordController,
+                                focusNode: passwordFocusNode,
+                                textInputType: TextInputType.visiblePassword,
+                                prefixIcon: Icons.key,
+                                suffixIcon: signInCubit.suffix,
+                                obscureText: signInCubit.isPassword,
+                                suffixIconOnTap: () {
+                                  signInCubit.changePassword();
+                                },
+                                validator: (value) {
+                                  return MyValidators.passwordValidator(value);
+                                },
+                                hintText: AppString.password,
+                                textInputAction: TextInputAction.next,
+                                onFieldSubmitted: (value) {},
+                              ),
                             ),
-                          ),
-                          SliverToBoxAdapter(
-                            child: defaultMaterialButton(
-                              function: () {
-                                if (formKey.currentState!.validate()) {
-                                  signInCubit.userSignIn(
-                                    email: emailController.text,
-                                    password: passwordController.text,
-                                  );
-                                }
-                              },
-                              text: AppString.signIn,
-                              context: context,
-                              color: ColorManager.primaryColor,
-                            ),
-                          ),
-                          const SliverToBoxAdapter(
-                            child: SizedBox(
-                              height: 28,
-                            ),
-                          ),
-                          SliverToBoxAdapter(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  AppString.noAccount,
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                ),
-                                defaultTextButton(
+                            SliverToBoxAdapter(
+                              child: Align(
+                                alignment: Alignment.bottomLeft,
+                                child: defaultTextButton(
                                   function: () {
-                                    navigateTo(context, const SignUpScreen());
+                                    // navigateTo(context, const ResetPasswordScreen());
                                   },
-                                  text: AppString.signUp,
+                                  text: '${AppString.forgotPassword}?',
                                   context: context,
                                   color: ColorManager.primaryColor,
                                   fontSize: 14,
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                          SliverToBoxAdapter(
-                            child: SizedBox(
-                              height: screenHeight * .05,
+                            SliverToBoxAdapter(
+                              child: SizedBox(
+                                height: screenHeight * .15,
+                              ),
                             ),
-                          ),
-                        ],
+                            SliverToBoxAdapter(
+                              child: defaultMaterialButton(
+                                function: () {
+                                  if (formKey.currentState!.validate()) {
+                                    signInCubit.userSignIn(
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                    );
+                                  }
+                                },
+                                text: AppString.signIn,
+                                context: context,
+                                color: ColorManager.primaryColor,
+                              ),
+                            ),
+                            const SliverToBoxAdapter(
+                              child: SizedBox(
+                                height: 28,
+                              ),
+                            ),
+                            SliverToBoxAdapter(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    AppString.noAccount,
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge,
+                                  ),
+                                  defaultTextButton(
+                                    function: () {
+                                      navigateTo(context, const SignUpScreen());
+                                    },
+                                    text: AppString.signUp,
+                                    context: context,
+                                    color: ColorManager.primaryColor,
+                                    fontSize: 14,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SliverToBoxAdapter(
+                              child: SizedBox(
+                                height: screenHeight * .05,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },
