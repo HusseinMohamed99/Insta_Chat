@@ -32,6 +32,7 @@ Widget imageWithShimmer(
   double? height,
   double? width,
   double? radius,
+  BoxFit? fit,
 }) {
   return FullScreenWidget(
     child: Center(
@@ -42,7 +43,7 @@ Widget imageWithShimmer(
           imageUrl: '$image',
           width: width ?? double.infinity,
           height: height ?? double.infinity,
-          boxFit: BoxFit.fitWidth,
+          boxFit: fit ?? BoxFit.fitWidth,
         ),
       ),
     ),

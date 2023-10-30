@@ -48,7 +48,7 @@ class ImageWithShimmer extends StatelessWidget {
           ),
         );
       },
-      errorWidget: (_, __, ___) => const Icon(Icons.access_alarms_outlined),
+      errorWidget: (_, __, ___) => const Icon(Icons.error),
     );
   }
 }

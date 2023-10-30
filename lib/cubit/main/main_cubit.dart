@@ -358,11 +358,11 @@ class MainCubit extends Cubit<MainState> {
     myDocument.docs[0].reference.delete();
   }
 
-  void deleteAccount(context) async {
+  void deleteAccount({required buildContext}) async {
     await FirebaseAuth.instance.currentUser!.delete().then((value) async {
       await FirebaseFirestore.instance.collection('users').doc(uId).delete();
       CacheHelper.removeData(key: 'uId');
-      navigateAndFinish(context, const OnBoardScreen());
+      navigateAndFinish(buildContext, const OnBoardScreen());
     });
   }
 }

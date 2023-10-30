@@ -7,6 +7,7 @@ import 'package:insta_chat/cubit/main/main_state.dart';
 import 'package:insta_chat/model/user_model.dart';
 import 'package:insta_chat/shared/components/buttons.dart';
 import 'package:insta_chat/shared/components/constants.dart';
+import 'package:insta_chat/shared/components/logout.dart';
 import 'package:insta_chat/shared/components/show_toast.dart';
 import 'package:insta_chat/shared/components/text_form_field.dart';
 import 'package:insta_chat/utils/color_manager.dart';
@@ -73,6 +74,7 @@ class EditProfileScreen extends StatelessWidget {
                             child: imageWithShimmer(
                               userModelData.image,
                               radius: 75,
+                              fit: BoxFit.fill,
                             ),
                           ),
                         )
@@ -229,6 +231,41 @@ class EditProfileScreen extends StatelessWidget {
                           text: 'Update',
                           context: context,
                           color: ColorManager.primaryColor,
+                        ),
+                      ),
+                      const SliverToBoxAdapter(
+                        child: SizedBox(
+                          height: 10,
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: defaultMaterialButton(
+                                function: () {
+                                  mainCubit.deleteAccount(
+                                      buildContext: context);
+                                },
+                                text: 'Delete',
+                                context: context,
+                                color: ColorManager.error,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: defaultMaterialButton(
+                                function: () {
+                                  logOut(buildContext: context);
+                                },
+                                text: 'Log Out',
+                                context: context,
+                                color: ColorManager.black,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

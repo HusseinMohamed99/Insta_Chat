@@ -66,7 +66,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       phone: phone,
       uid: uid,
       image:
-          'https://firebasestorage.googleapis.com/v0/b/insta-chat-e6467.appspot.com/o/avatar.svg?alt=media&token=7262ad31-dc1b-416e-b5d9-0f3679643b38',
+          'https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?w=740&t=st=1698676472~exp=1698677072~hmac=cc82479ff1f2ca3e7720bfb52c550620688b05d13f93a4f5167ae88ca619eab9',
       bio: 'Write a bio...',
       isEmailVerified: false,
     );

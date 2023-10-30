@@ -13,18 +13,20 @@ Widget defaultMaterialButton({
   Color? color,
   Color? textColor,
 }) {
-  return Container(
-    alignment: Alignment.center,
-    width: width ?? double.infinity,
-    height: height ?? 56,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(radius ?? 8),
-      color: color ?? ColorManager.white,
-    ),
-    child: MaterialButton(
-      onPressed: () {
-        function();
-      },
+  return MaterialButton(
+    padding: EdgeInsets.zero,
+    minWidth: width ?? double.infinity,
+    onPressed: () {
+      function();
+    },
+    child: Container(
+      alignment: Alignment.center,
+      width: width ?? double.infinity,
+      height: height ?? 56,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(radius ?? 8),
+        color: color ?? ColorManager.white,
+      ),
       child: Text(
         text,
         textAlign: TextAlign.center,
