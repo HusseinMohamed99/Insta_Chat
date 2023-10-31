@@ -45,7 +45,7 @@ class SignUpScreen extends StatelessWidget {
         listener: (context, state) {
           if (state is SignUpSuccessState) {
             CacheHelper.saveData(value: state.userModel.uid, key: 'uId');
-            showToast(text: 'SignUpSuccessState', state: ToastStates.success);
+            showToast(text: 'Sign Up Success', state: ToastStates.success);
             navigateAndFinish(
               context,
               const EmailVerificationScreen(),
