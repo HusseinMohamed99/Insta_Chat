@@ -349,27 +349,50 @@ class BuildFriendMessages extends StatelessWidget {
   final MessageModel messageModel;
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Container(
-        padding: const EdgeInsets.all(AppPadding.p16),
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: ColorManager.secondaryPrimaryColor,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(AppSize.s28),
-            topRight: Radius.circular(AppSize.s28),
-            bottomRight: Radius.circular(AppSize.s28),
+    if (messageModel.messageImage == '') {
+      return Align(
+        alignment: Alignment.centerLeft,
+        child: Container(
+          padding: const EdgeInsets.all(AppPadding.p16),
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: ColorManager.secondaryPrimaryColor,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(AppSize.s28),
+              topRight: Radius.circular(AppSize.s28),
+              bottomRight: Radius.circular(AppSize.s28),
+            ),
+          ),
+          child: Text(
+            '${messageModel.text}',
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge!
+                .copyWith(color: ColorManager.black),
           ),
         ),
-        child: Text(
-          '${messageModel.text}',
-          style: Theme.of(context)
-              .textTheme
-              .titleLarge!
-              .copyWith(color: ColorManager.black),
+      );
+    } else {
+      return Align(
+        alignment: Alignment.centerLeft,
+        child: Container(
+          width: 250,
+          height: 200,
+          padding: const EdgeInsets.all(AppPadding.p12),
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: ColorManager.secondaryPrimaryColor,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(AppSize.s28),
+              topRight: Radius.circular(AppSize.s28),
+              bottomRight: Radius.circular(AppSize.s28),
+            ),
+          ),
+          child: imagePreview(
+            '${messageModel.messageImage}',
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }

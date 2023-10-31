@@ -47,6 +47,7 @@ class ProfileScreen extends StatelessWidget {
                   child: imageWithShimmer(
                     userModel.image,
                     radius: 75,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
