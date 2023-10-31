@@ -60,7 +60,7 @@ class ChatScreen extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 18,
                       child: imageWithShimmer(
-                        mainCubit.userModel!.image,
+                        userModel.image,
                         radius: 75,
                         fit: BoxFit.fill,
                       ),
@@ -69,7 +69,7 @@ class ChatScreen extends StatelessWidget {
                   const SizedBox(width: AppSize.s20),
                   Expanded(
                     child: Text(
-                      mainCubit.userModel!.name,
+                      userModel.name,
                       style: Theme.of(context).textTheme.displayLarge,
                     ),
                   ),

@@ -22,14 +22,7 @@ class HomeScreen extends StatelessWidget {
     final double screenWidth = MediaQuery.sizeOf(context).width;
     final double screenHeight = MediaQuery.sizeOf(context).height;
     return BlocConsumer<MainCubit, MainState>(
-      listener: (context, state) {
-        if (state is GetUserDataErrorState) {
-          print(state.error);
-        }
-        if (state is GetUserDataSuccessState) {
-          print(MainCubit.get(context).userModel!.name);
-        }
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         MainCubit cubit = MainCubit.get(context);
 

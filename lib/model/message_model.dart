@@ -38,7 +38,7 @@ class MessageModel {
       'senderId': senderId,
       'messageId': messageId,
       'messageImage': messageImage,
-      'time': time
+      'time': time,
     };
   }
 }

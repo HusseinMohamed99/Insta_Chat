@@ -70,6 +70,8 @@ class BuildUsersItems extends StatelessWidget {
                   userModel: users,
                 ),
               );
+              MainCubit.get(context).getMessage(receiverId: users.uid);
+              MainCubit.get(context).getUserData();
             },
             label: Text(
               'message',

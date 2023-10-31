@@ -15,7 +15,7 @@ import 'package:insta_chat/shared/components/constants.dart';
 import 'package:insta_chat/shared/components/navigator.dart';
 import 'package:insta_chat/shared/network/cache_helper.dart';
 import 'package:insta_chat/shared/network/dio_helper.dart';
-import 'package:insta_chat/view/onBoard/on_board_view.dart';
+import 'package:insta_chat/view/signIn/sign_in_view.dart';
 
 class MainCubit extends Cubit<MainState> {
   MainCubit() : super(MainInitial());
@@ -363,7 +363,7 @@ class MainCubit extends Cubit<MainState> {
     await FirebaseAuth.instance.currentUser!.delete().then((value) async {
       await FirebaseFirestore.instance.collection('users').doc(uId).delete();
       CacheHelper.removeData(key: 'uId');
-      navigateAndFinish(buildContext, const OnBoardScreen());
+      navigateAndFinish(buildContext, const SignInScreen());
     });
   }
 }
