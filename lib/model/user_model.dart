@@ -6,7 +6,7 @@ class UserModel {
   final String token;
   final String image;
   final String bio;
-  final bool isEmailVerified;
+  final bool? isEmailVerified;
 
   UserModel({
     required this.name,

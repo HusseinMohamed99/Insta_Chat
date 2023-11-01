@@ -56,12 +56,14 @@ void main() async {
   await CacheHelper.init();
   DioHelper.init();
   uId = CacheHelper.getData(key: 'uId');
+
   Widget widget;
   if (uId != null) {
     widget = const OnBoardScreen();
   } else {
     widget = const SignInScreen();
   }
+  print(uId);
   runApp(MyApp(
     startWidget: widget,
   ));

@@ -34,6 +34,7 @@ class EmailVerificationCubit extends Cubit<EmailVerificationState> {
             .update({'isEmailVerified': true}).then(
                 (value) => emit(EmailVerifiedSuccessfullyState()));
       }
+      print(isEmailVerified);
       emit(ReloadSuccessState());
     }).catchError((error) {
       emit(ReloadErrorState(error.toString()));

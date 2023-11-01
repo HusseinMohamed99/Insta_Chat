@@ -9,7 +9,7 @@ import 'package:insta_chat/shared/components/navigator.dart';
 import 'package:insta_chat/shared/components/show_toast.dart';
 import 'package:insta_chat/utils/color_manager.dart';
 import 'package:insta_chat/utils/value_manager.dart';
-import 'package:insta_chat/view/onBoard/on_board_view.dart';
+import 'package:insta_chat/view/signIn/sign_in_view.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class EmailVerificationScreen extends StatelessWidget {
@@ -20,11 +20,10 @@ class EmailVerificationScreen extends StatelessWidget {
     TextTheme textTheme = Theme.of(context).textTheme;
     double screenHeight = MediaQuery.sizeOf(context).height;
     double screenWidth = MediaQuery.sizeOf(context).width;
-    EmailVerificationCubit cubit = EmailVerificationCubit.get(context);
 
     return BlocConsumer<EmailVerificationCubit, EmailVerificationState>(
       listener: (context, state) {
-        if (cubit.isEmailVerified) {
+        if (state is ReloadSuccessState) {
           showToast(
             text: 'create Account Successfully',
             state: ToastStates.success,
@@ -45,6 +44,8 @@ class EmailVerificationScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
+        EmailVerificationCubit cubit = EmailVerificationCubit.get(context);
+
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: const SystemUiOverlayStyle(
             statusBarColor: Colors.transparent,
@@ -152,13 +153,9 @@ class EmailVerificationScreen extends StatelessWidget {
                                   cubit.reloadUser().then(
                                     (value) {
                                       if (cubit.isEmailVerified) {
-                                        MainCubit.get(context)
-                                          ..getUserData()
-                                          ..getAllUsers();
-
                                         navigateAndFinish(
                                           context,
-                                          const OnBoardScreen(),
+                                          const SignInScreen(),
                                         );
                                       } else {}
                                     },
