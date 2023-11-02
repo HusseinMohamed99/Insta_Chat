@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:insta_chat/cubit/email_verification/email_verification_state.dart';
 import 'package:insta_chat/model/user_model.dart';
 import 'package:insta_chat/shared/components/constants.dart';
-import 'package:meta/meta.dart';
-
-part 'email_verification_state.dart';
 
 class EmailVerificationCubit extends Cubit<EmailVerificationState> {
   EmailVerificationCubit() : super(EmailVerificationInitialState());

@@ -1,7 +1,4 @@
-part of 'email_verification_cubit.dart';
-
-@immutable
-sealed class EmailVerificationState {}
+abstract class EmailVerificationState {}
 
 class EmailVerificationInitialState extends EmailVerificationState {}
 
