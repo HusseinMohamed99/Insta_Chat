@@ -8,13 +8,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:insta_chat/main.dart';
-import 'package:insta_chat/view/onBoard/on_board_view.dart';
+import 'package:insta_chat/view/welcome/welcome_view.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp(
-      startWidget: OnBoardScreen(),
+      startWidget: WelcomeScreen(),
     ));
 
     // Verify that our counter starts at 0.

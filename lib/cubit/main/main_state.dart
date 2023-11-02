@@ -57,3 +57,12 @@ class SendFCMNotificationSuccessState extends MainState {}
 class SendInAppNotificationLoadingState extends MainState {}
 
 class SetNotificationIdSuccessState extends MainState {}
+
+class ChangeUserPasswordLoadingState extends MainState {}
+
+class ChangeUserPasswordSuccessState extends MainState {}
+
+class ChangeUserPasswordErrorState extends MainState {
+  final String error;
+  ChangeUserPasswordErrorState({required this.error});
+}

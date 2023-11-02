@@ -10,8 +10,8 @@ import 'package:insta_chat/utils/color_manager.dart';
 import 'package:insta_chat/utils/font_manager.dart';
 import 'package:insta_chat/view/home/home_view.dart';
 
-class OnBoardScreen extends StatelessWidget {
-  const OnBoardScreen({super.key});
+class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

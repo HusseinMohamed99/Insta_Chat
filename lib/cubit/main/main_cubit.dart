@@ -13,8 +13,10 @@ import 'package:insta_chat/model/notifications_model.dart';
 import 'package:insta_chat/model/user_model.dart';
 import 'package:insta_chat/shared/components/constants.dart';
 import 'package:insta_chat/shared/components/navigator.dart';
+import 'package:insta_chat/shared/components/show_toast.dart';
 import 'package:insta_chat/shared/network/cache_helper.dart';
 import 'package:insta_chat/shared/network/dio_helper.dart';
+import 'package:insta_chat/utils/app_string.dart';
 import 'package:insta_chat/view/signIn/sign_in_view.dart';
 
 class MainCubit extends Cubit<MainState> {
@@ -357,6 +359,30 @@ class MainCubit extends Cubit<MainState> {
         .where('messageId', isEqualTo: messageId)
         .get();
     myDocument.docs[0].reference.delete();
+  }
+
+  void changeUserPassword({
+    required String oldPassword,
+    required String newPassword,
+    required String confirmNewPassword,
+  }) {
+    emit(ChangeUserPasswordLoadingState());
+    FirebaseAuth.instance.currentUser
+        ?.updatePassword(newPassword)
+        .then((value) {
+      showToast(
+        state: ToastStates.success,
+        text: AppString.changePasswordSuccessfully,
+      );
+      emit(ChangeUserPasswordSuccessState());
+      getUserData();
+    }).catchError((error) {
+      showToast(
+        state: ToastStates.error,
+        text: AppString.changePasswordError,
+      );
+      emit(ChangeUserPasswordErrorState(error: error.toString()));
+    });
   }
 
   void deleteAccount({required buildContext}) async {

@@ -16,8 +16,8 @@ import 'package:insta_chat/shared/components/show_toast.dart';
 import 'package:insta_chat/shared/network/cache_helper.dart';
 import 'package:insta_chat/shared/network/dio_helper.dart';
 import 'package:insta_chat/utils/themes.dart';
-import 'package:insta_chat/view/onBoard/on_board_view.dart';
 import 'package:insta_chat/view/signIn/sign_in_view.dart';
+import 'package:insta_chat/view/welcome/welcome_view.dart';
 
 FirebaseMessaging messaging = FirebaseMessaging.instance;
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -59,7 +59,7 @@ void main() async {
 
   Widget widget;
   if (uId != null) {
-    widget = const OnBoardScreen();
+    widget = const WelcomeScreen();
   } else {
     widget = const SignInScreen();
   }

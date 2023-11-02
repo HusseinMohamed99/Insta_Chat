@@ -8,10 +8,14 @@ import 'package:insta_chat/model/user_model.dart';
 import 'package:insta_chat/shared/components/buttons.dart';
 import 'package:insta_chat/shared/components/constants.dart';
 import 'package:insta_chat/shared/components/logout.dart';
+import 'package:insta_chat/shared/components/navigator.dart';
 import 'package:insta_chat/shared/components/show_toast.dart';
 import 'package:insta_chat/shared/components/text_form_field.dart';
+import 'package:insta_chat/utils/app_string.dart';
 import 'package:insta_chat/utils/color_manager.dart';
+import 'package:insta_chat/utils/my_validators.dart';
 import 'package:insta_chat/utils/value_manager.dart';
+import 'package:insta_chat/view/password/change_password_view.dart';
 
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({super.key});
@@ -74,7 +78,7 @@ class EditProfileScreen extends StatelessWidget {
                             child: imageWithShimmer(
                               userModelData.image,
                               radius: 75,
-                              fit: BoxFit.fill,
+                              fit: BoxFit.fitWidth,
                             ),
                           ),
                         )
@@ -136,15 +140,12 @@ class EditProfileScreen extends StatelessWidget {
                       SliverToBoxAdapter(
                         child: CustomTextFormField(
                           controller: nameController,
-                          hintText: 'Name',
+                          hintText: AppString.name,
                           prefixIcon: Icons.person,
                           textInputType: TextInputType.name,
                           textInputAction: TextInputAction.done,
-                          validator: (String? value) {
-                            if (value!.isEmpty) {
-                              return 'Name must not be empty';
-                            }
-                            return null;
+                          validator: (value) {
+                            return MyValidators.displayNameValidator(value);
                           },
                           focusNode: nameFocusNode,
                         ),
@@ -157,15 +158,12 @@ class EditProfileScreen extends StatelessWidget {
                       SliverToBoxAdapter(
                         child: CustomTextFormField(
                           controller: emailController,
-                          hintText: 'Email',
+                          hintText: AppString.email,
                           prefixIcon: Icons.email_outlined,
                           textInputType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.done,
-                          validator: (String? value) {
-                            if (value!.isEmpty) {
-                              return 'Email must not be empty';
-                            }
-                            return null;
+                          validator: (value) {
+                            return MyValidators.emailValidator(value);
                           },
                           focusNode: emailFocusNode,
                         ),
@@ -178,7 +176,7 @@ class EditProfileScreen extends StatelessWidget {
                       SliverToBoxAdapter(
                         child: CustomTextFormField(
                           controller: bioController,
-                          hintText: 'Bio',
+                          hintText: AppString.bio,
                           prefixIcon: Icons.info_outline,
                           textInputType: TextInputType.text,
                           textInputAction: TextInputAction.done,
@@ -199,15 +197,12 @@ class EditProfileScreen extends StatelessWidget {
                       SliverToBoxAdapter(
                         child: CustomTextFormField(
                           controller: phoneController,
-                          hintText: 'Phone',
+                          hintText: AppString.phone,
                           prefixIcon: Icons.phone,
                           textInputType: TextInputType.phone,
                           textInputAction: TextInputAction.done,
-                          validator: (String? value) {
-                            if (value!.isEmpty) {
-                              return 'Phone must not be empty';
-                            }
-                            return null;
+                          validator: (value) {
+                            return MyValidators.phoneValidator(value);
                           },
                           focusNode: phoneFocusNode,
                         ),
@@ -228,7 +223,22 @@ class EditProfileScreen extends StatelessWidget {
                               bioController,
                             );
                           },
-                          text: 'Update',
+                          text: AppString.update,
+                          context: context,
+                          color: ColorManager.primaryColor,
+                        ),
+                      ),
+                      const SliverToBoxAdapter(
+                        child: SizedBox(
+                          height: AppPadding.p20,
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: defaultMaterialButton(
+                          function: () {
+                            navigateTo(context, const ChangePasswordScreen());
+                          },
+                          text: AppString.changePassword,
                           context: context,
                           color: ColorManager.primaryColor,
                         ),
@@ -247,7 +257,7 @@ class EditProfileScreen extends StatelessWidget {
                                   mainCubit.deleteAccount(
                                       buildContext: context);
                                 },
-                                text: 'Delete',
+                                text: AppString.delete,
                                 context: context,
                                 color: ColorManager.error,
                               ),
@@ -260,7 +270,7 @@ class EditProfileScreen extends StatelessWidget {
                                 function: () {
                                   logOut(buildContext: context);
                                 },
-                                text: 'Log Out',
+                                text: AppString.logOut,
                                 context: context,
                                 color: ColorManager.black,
                               ),
