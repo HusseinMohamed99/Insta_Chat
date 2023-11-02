@@ -86,7 +86,7 @@ void showFlutterNotification(RemoteMessage message) {
 
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
