@@ -63,7 +63,6 @@ void main() async {
   } else {
     widget = const SignInScreen();
   }
-  print(uId);
   runApp(MyApp(
     startWidget: widget,
   ));
