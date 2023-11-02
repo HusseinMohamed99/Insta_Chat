@@ -18,6 +18,8 @@ class ChatScreen extends StatelessWidget {
   final UserModel userModel;
   @override
   Widget build(BuildContext context) {
+    final controller = ScrollController();
+
     final double screenWidth = MediaQuery.sizeOf(context).width;
     final double screenHeight = MediaQuery.sizeOf(context).height;
     MainCubit mainCubit = MainCubit.get(context);
@@ -39,214 +41,231 @@ class ChatScreen extends StatelessWidget {
         mainCubit.getMessage(
           receiverId: userModel.uid,
         );
-        return ModalProgressHUD(
-          inAsyncCall: state is UploadMessageImageLoadingState,
-          progressIndicator: const AdaptiveIndicator(),
-          child: Scaffold(
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              leading: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.arrow_back_ios_new_outlined),
-              ),
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    backgroundColor: ColorManager.dividerColor,
-                    radius: 20,
-                    child: CircleAvatar(
-                      radius: 18,
-                      child: imageWithShimmer(
-                        userModel.image,
-                        radius: 75,
-                        fit: BoxFit.fill,
+        return GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: ModalProgressHUD(
+            inAsyncCall: state is UploadMessageImageLoadingState,
+            progressIndicator: const AdaptiveIndicator(),
+            child: Scaffold(
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                leading: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Icons.arrow_back_ios_new_outlined),
+                ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: ColorManager.dividerColor,
+                      radius: 20,
+                      child: CircleAvatar(
+                        radius: 18,
+                        child: imageWithShimmer(
+                          userModel.image,
+                          radius: 75,
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: AppSize.s20),
-                  Expanded(
-                    child: Text(
-                      userModel.name,
-                      style: Theme.of(context).textTheme.displayLarge,
+                    const SizedBox(width: AppSize.s20),
+                    Expanded(
+                      child: Text(
+                        userModel.name,
+                        style: Theme.of(context).textTheme.displayLarge,
+                      ),
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      onPressed: () async {
+                        String number = mainCubit.userModel!.phone;
+                        await urlLauncher(Uri.parse('tel://+2$number'));
+                        await FlutterPhoneDirectCaller.callNumber(number);
+                      },
+                      icon: const Icon(Icons.call),
+                    ),
+                  ],
+                ),
+              ),
+              body: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppPadding.p20,
+                      vertical: AppPadding.p20,
+                    ),
+                    width: screenWidth,
+                    height: screenHeight,
+                    decoration: ShapeDecoration(
+                      image: const DecorationImage(
+                        fit: BoxFit.fill,
+                        image: AssetImage(
+                          Assets.imagesBackgroundImage,
+                        ),
+                      ),
+                      color: ColorManager.white,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(50),
+                          topRight: Radius.circular(50),
+                        ),
+                      ),
+                    ),
+                    child: CustomScrollView(
+                      controller: controller,
+                      physics: const BouncingScrollPhysics(),
+                      keyboardDismissBehavior:
+                          ScrollViewKeyboardDismissBehavior.onDrag,
+                      slivers: [
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              MessageModel message = mainCubit.message[index];
+                              if (mainCubit.userModel!.uid ==
+                                  message.senderId) {
+                                return BuildOwnMessages(
+                                  messageModel: message,
+                                );
+                              } else {
+                                return BuildFriendMessages(
+                                  messageModel: message,
+                                );
+                              }
+                            },
+                            childCount: mainCubit.message.length,
+                          ),
+                        ),
+                        const SliverToBoxAdapter(
+                          child: SizedBox(height: 100),
+                        ),
+                      ],
                     ),
                   ),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: () async {
-                      String number = mainCubit.userModel!.phone;
-                      await urlLauncher(Uri.parse('tel://+2$number'));
-                      await FlutterPhoneDirectCaller.callNumber(number);
-                    },
-                    icon: const Icon(Icons.call),
+                  const SizedBox(height: 20),
+                  if (mainCubit.messageImagePicked != null)
+                    Stack(
+                      alignment: AlignmentDirectional.topEnd,
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          height: 170,
+                          decoration: BoxDecoration(
+                            color: ColorManager.backgroundGreyGrey,
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(4),
+                              topRight: Radius.circular(4),
+                            ),
+                            image: DecorationImage(
+                              fit: BoxFit.fitHeight,
+                              image: FileImage(mainCubit.messageImagePicked!),
+                            ),
+                          ),
+                        ),
+                        CircleAvatar(
+                          radius: 20,
+                          backgroundColor: ColorManager.primaryColor,
+                          child: IconButton(
+                            onPressed: () {
+                              mainCubit.removeMessageImage();
+                            },
+                            icon: Icon(
+                              Icons.close_outlined,
+                              color: ColorManager.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  Form(
+                    key: formKey,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            textAlignVertical: TextAlignVertical.center,
+                            maxLines: 3,
+                            minLines: 1,
+                            controller: textController,
+                            keyboardType: TextInputType.multiline,
+                            decoration: InputDecoration(
+                              hintText: 'message',
+                              border: InputBorder.none,
+                              filled: true,
+                              fillColor: ColorManager.backgroundGreyGrey,
+                              prefixIcon: IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.emoji_emotions_outlined,
+                                  size: 20,
+                                  color: ColorManager.grey,
+                                ),
+                              ),
+                              suffixIcon: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      mainCubit.getMessageImage();
+                                    },
+                                    icon: Icon(
+                                      Icons.camera,
+                                      size: 24,
+                                      color: ColorManager.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            validator: (String? value) {
+                              if (value!.trim().isEmpty) {
+                                return 'message';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: MaterialButton(
+                            padding: const EdgeInsets.all(0),
+                            color: ColorManager.primaryColor,
+                            onPressed: () {
+                              sendMessageMethod(
+                                mainCubit,
+                                formKey,
+                                textController,
+                                uuid,
+                                context,
+                              );
+                              controller.animateTo(
+                                controller.position.maxScrollExtent,
+                                curve: Curves.easeOut,
+                                duration: const Duration(milliseconds: 500),
+                              );
+                              // controller
+                              //     .jumpTo(controller.position.maxScrollExtent);
+                            },
+                            child: Icon(
+                              Icons.upload_outlined,
+                              color: ColorManager.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ),
-            body: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppPadding.p20,
-                    vertical: AppPadding.p20,
-                  ),
-                  width: screenWidth,
-                  height: screenHeight,
-                  decoration: ShapeDecoration(
-                    image: const DecorationImage(
-                      fit: BoxFit.fill,
-                      image: AssetImage(
-                        Assets.imagesBackgroundImage,
-                      ),
-                    ),
-                    color: ColorManager.white,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(50),
-                        topRight: Radius.circular(50),
-                      ),
-                    ),
-                  ),
-                  child: CustomScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    keyboardDismissBehavior:
-                        ScrollViewKeyboardDismissBehavior.onDrag,
-                    slivers: [
-                      SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            MessageModel message = mainCubit.message[index];
-                            if (mainCubit.userModel!.uid == message.senderId) {
-                              return BuildOwnMessages(
-                                messageModel: message,
-                              );
-                            } else {
-                              return BuildFriendMessages(
-                                messageModel: message,
-                              );
-                            }
-                          },
-                          childCount: mainCubit.message.length,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
-                if (mainCubit.messageImagePicked != null)
-                  Stack(
-                    alignment: AlignmentDirectional.topEnd,
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        height: 170,
-                        decoration: BoxDecoration(
-                          color: ColorManager.backgroundGreyGrey,
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(4),
-                            topRight: Radius.circular(4),
-                          ),
-                          image: DecorationImage(
-                            fit: BoxFit.fitHeight,
-                            image: FileImage(mainCubit.messageImagePicked!),
-                          ),
-                        ),
-                      ),
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundColor: ColorManager.primaryColor,
-                        child: IconButton(
-                          onPressed: () {
-                            mainCubit.removeMessageImage();
-                          },
-                          icon: Icon(
-                            Icons.close_outlined,
-                            color: ColorManager.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                Form(
-                  key: formKey,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          textAlignVertical: TextAlignVertical.center,
-                          maxLines: 3,
-                          minLines: 1,
-                          controller: textController,
-                          keyboardType: TextInputType.multiline,
-                          decoration: InputDecoration(
-                            hintText: 'message',
-                            border: InputBorder.none,
-                            filled: true,
-                            fillColor: ColorManager.backgroundGreyGrey,
-                            prefixIcon: IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.emoji_emotions_outlined,
-                                size: 20,
-                                color: ColorManager.grey,
-                              ),
-                            ),
-                            suffixIcon: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-                                    mainCubit.getMessageImage();
-                                  },
-                                  icon: Icon(
-                                    Icons.camera,
-                                    size: 24,
-                                    color: ColorManager.grey,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          validator: (String? value) {
-                            if (value!.isEmpty) {
-                              return 'message';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: MaterialButton(
-                          padding: const EdgeInsets.all(0),
-                          color: ColorManager.primaryColor,
-                          onPressed: () {
-                            sendMessageMethod(
-                              mainCubit,
-                              formKey,
-                              textController,
-                              uuid,
-                              context,
-                            );
-                          },
-                          child: Icon(
-                            Icons.upload_outlined,
-                            color: ColorManager.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
             ),
           ),
         );
@@ -261,7 +280,7 @@ class ChatScreen extends StatelessWidget {
       mainCubit.sendMessage(
         receiverId: userModel.uid,
         dateTime: DateTime.now().toString(),
-        text: textController.text,
+        text: textController.text.trim(),
         messageId: uuid.v4(),
       );
       textController.clear();

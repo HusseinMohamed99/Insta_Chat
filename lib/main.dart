@@ -21,7 +21,7 @@ import 'package:insta_chat/view/signIn/sign_in_view.dart';
 
 FirebaseMessaging messaging = FirebaseMessaging.instance;
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  showToast(text: 'sentMessage', state: ToastStates.success);
+  showToast(text: 'You Received Message', state: ToastStates.success);
 }
 
 void main() async {
@@ -44,7 +44,7 @@ void main() async {
   }
   //when the app is opened
   FirebaseMessaging.onMessage.listen((event) {
-    showToast(text: 'sentMessage', state: ToastStates.success);
+    showToast(text: 'You Received Message', state: ToastStates.success);
   });
   // when click on notification to open app
   FirebaseMessaging.onMessageOpenedApp.listen((event) {
