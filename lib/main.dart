@@ -34,9 +34,9 @@ void main() async {
     alert: true,
     announcement: false,
     badge: true,
-    carPlay: false,
+    carPlay: true,
     criticalAlert: false,
-    provisional: false,
+    provisional: true,
     sound: true,
   );
   if (kDebugMode) {
@@ -51,6 +51,11 @@ void main() async {
     showToast(text: 'openedApp', state: ToastStates.success);
   });
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  await messaging.setForegroundNotificationPresentationOptions(
+    alert: true, // Required to display a heads up notification
+    badge: true,
+    sound: true,
+  );
 
   Bloc.observer = MyBlocObserver();
   await CacheHelper.init();
