@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:insta_chat/cubit/main/main_cubit.dart';
-import 'package:insta_chat/cubit/sign_in/sign_in_cubit.dart';
-import 'package:insta_chat/cubit/sign_in/sign_in_state.dart';
+import 'package:insta_chat/cubits/main/main_cubit.dart';
+import 'package:insta_chat/cubits/sign_in/sign_in_cubit.dart';
+import 'package:insta_chat/cubits/sign_in/sign_in_state.dart';
 import 'package:insta_chat/shared/components/buttons.dart';
 import 'package:insta_chat/shared/components/constants.dart';
 import 'package:insta_chat/shared/components/navigator.dart';
@@ -65,9 +65,10 @@ class SignInScreen extends StatelessWidget {
               ),
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppPadding.p40,
-                    vertical: AppPadding.p60,
+                  padding: const EdgeInsets.only(
+                    right: AppPadding.p40,
+                    left: AppPadding.p40,
+                    top: AppPadding.p60,
                   ),
                   width: screenWidth,
                   decoration: const ShapeDecoration(

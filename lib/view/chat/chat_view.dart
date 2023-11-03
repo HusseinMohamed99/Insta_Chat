@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
-import 'package:insta_chat/cubit/main/main_cubit.dart';
-import 'package:insta_chat/cubit/main/main_state.dart';
+import 'package:insta_chat/cubits/main/main_cubit.dart';
+import 'package:insta_chat/cubits/main/main_state.dart';
 import 'package:insta_chat/image_assets.dart';
 import 'package:insta_chat/model/message_model.dart';
 import 'package:insta_chat/model/user_model.dart';

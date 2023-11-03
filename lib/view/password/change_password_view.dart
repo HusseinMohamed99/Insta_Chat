@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:insta_chat/cubit/main/main_cubit.dart';
-import 'package:insta_chat/cubit/main/main_state.dart';
+import 'package:insta_chat/cubits/main/main_cubit.dart';
+import 'package:insta_chat/cubits/main/main_state.dart';
 import 'package:insta_chat/shared/components/buttons.dart';
 import 'package:insta_chat/shared/components/navigator.dart';
 import 'package:insta_chat/shared/components/show_toast.dart';

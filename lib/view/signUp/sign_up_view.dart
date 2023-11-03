@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:insta_chat/cubit/sign_up/sign_up_cubit.dart';
-import 'package:insta_chat/cubit/sign_up/sign_up_state.dart';
+import 'package:insta_chat/cubits/sign_up/sign_up_cubit.dart';
+import 'package:insta_chat/cubits/sign_up/sign_up_state.dart';
 import 'package:insta_chat/shared/components/buttons.dart';
 import 'package:insta_chat/shared/components/check_box.dart';
 import 'package:insta_chat/shared/components/navigator.dart';
@@ -74,7 +74,11 @@ class SignUpScreen extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(
-                      top: 28, left: 40, right: 40, bottom: 54),
+                    top: 28,
+                    left: 40,
+                    right: 40,
+                    bottom: 54,
+                  ),
                   child: Text(
                     AppString.signUpHint,
                     style: Theme.of(context).textTheme.headlineMedium!.copyWith(

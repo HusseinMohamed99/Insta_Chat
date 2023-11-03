@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:insta_chat/cubit/sign_in/sign_in_state.dart';
+import 'package:insta_chat/cubits/sign_in/sign_in_state.dart';
 
 class SignInCubit extends Cubit<SignInState> {
   SignInCubit() : super(SignInInitialState());

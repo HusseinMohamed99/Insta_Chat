@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:insta_chat/cubit/sign_up/sign_up_state.dart';
+import 'package:insta_chat/cubits/sign_up/sign_up_state.dart';
 import 'package:insta_chat/model/user_model.dart';
 import 'package:insta_chat/shared/network/cache_helper.dart';
 

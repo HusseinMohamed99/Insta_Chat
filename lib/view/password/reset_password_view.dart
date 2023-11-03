@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:insta_chat/cubit/reset_password/reset_password_cubit.dart';
-import 'package:insta_chat/cubit/reset_password/reset_password_state.dart';
+import 'package:insta_chat/cubits/reset_password/reset_password_cubit.dart';
+import 'package:insta_chat/cubits/reset_password/reset_password_state.dart';
 import 'package:insta_chat/shared/components/buttons.dart';
 import 'package:insta_chat/shared/components/navigator.dart';
 import 'package:insta_chat/shared/components/show_toast.dart';

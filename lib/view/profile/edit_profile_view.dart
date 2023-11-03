@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:insta_chat/cubit/main/main_cubit.dart';
-import 'package:insta_chat/cubit/main/main_state.dart';
+import 'package:insta_chat/cubits/main/main_cubit.dart';
+import 'package:insta_chat/cubits/main/main_state.dart';
 import 'package:insta_chat/model/user_model.dart';
 import 'package:insta_chat/shared/components/buttons.dart';
 import 'package:insta_chat/shared/components/constants.dart';

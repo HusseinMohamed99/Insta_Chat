@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:insta_chat/cubit/email_verification/email_verification_cubit.dart';
-import 'package:insta_chat/cubit/email_verification/email_verification_state.dart';
-import 'package:insta_chat/cubit/main/main_cubit.dart';
+import 'package:insta_chat/cubits/email_verification/email_verification_cubit.dart';
+import 'package:insta_chat/cubits/email_verification/email_verification_state.dart';
+import 'package:insta_chat/cubits/main/main_cubit.dart';
 import 'package:insta_chat/image_assets.dart';
 import 'package:insta_chat/shared/components/buttons.dart';
 import 'package:insta_chat/shared/components/navigator.dart';

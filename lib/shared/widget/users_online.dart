@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:insta_chat/cubit/main/main_cubit.dart';
+import 'package:insta_chat/cubits/main/main_cubit.dart';
 import 'package:insta_chat/image_assets.dart';
 import 'package:insta_chat/model/user_model.dart';
 import 'package:insta_chat/shared/components/image_with_shimmer.dart';
