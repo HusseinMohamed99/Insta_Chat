@@ -19,3 +19,16 @@ Features:
 - Logout.
 - Reset password.
 - etc...
+
+<img src="https://github.com/HusseinMohamed99/Insta_Chat/assets/84459939/a96325ce-5a0b-459c-a961-fd1d6531a761" width="250" />
+<img src="https://github.com/HusseinMohamed99/Insta_Chat/assets/84459939/8400f496-a131-4184-a4d9-da5588fc6ace" width="250" />
+<img src="https://github.com/HusseinMohamed99/Insta_Chat/assets/84459939/932b294b-2f40-4ce0-88e8-5c9775c0507d" width="250" />
+<img src="https://github.com/HusseinMohamed99/Insta_Chat/assets/84459939/3fbf6491-86d4-471d-b570-a8db6e3a782d" width="250" />
+<img src="https://github.com/HusseinMohamed99/Insta_Chat/assets/84459939/b0a874a2-8f45-40a0-baa1-dcc0c1ff163b" width="250" />
+<img src="https://github.com/HusseinMohamed99/Insta_Chat/assets/84459939/ff51246b-c49d-424a-bfeb-0e1cac03d704" width="250" />
+<img src="https://github.com/HusseinMohamed99/Insta_Chat/assets/84459939/de8ccd4b-3721-4f31-9847-8bd9e314dd9c" width="250" />
+<img src="https://github.com/HusseinMohamed99/Insta_Chat/assets/84459939/ac3df4ed-d03a-42a4-af27-b01ab3281428" width="250" />
+<img src="https://github.com/HusseinMohamed99/Insta_Chat/assets/84459939/5145620c-93ae-4bbf-9dbd-1a3fd3ffac3d" width="250" />
+<img src="https://github.com/HusseinMohamed99/Insta_Chat/assets/84459939/bfe09693-544c-4855-9fee-a1aaf10eb584" width="250" />
+<img src="https://github.com/HusseinMohamed99/Insta_Chat/assets/84459939/9790d586-e613-4f6f-bbf4-c863bab85f22" width="250" />
+<img src="https://github.com/HusseinMohamed99/Insta_Chat/assets/84459939/31cc4421-c34b-433e-9525-b2ee1aef2ec5" width="250" />
