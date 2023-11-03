@@ -119,7 +119,7 @@ Future<void> main() async {
   });
   // when click on notification to open app
   FirebaseMessaging.onMessageOpenedApp.listen((event) {
-    showToast(text: 'openedApp', state: ToastStates.success);
+    showToast(text: 'opened App', state: ToastStates.success);
   });
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   await messaging.setForegroundNotificationPresentationOptions(
@@ -160,15 +160,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) {
-          if (uId != null) {
-            return MainCubit()
-              ..getUserData()
-              ..getAllUsers();
-          } else {
-            return MainCubit()..getAllUsers();
-          }
-        }),
+        BlocProvider(
+          create: (context) {
+            if (uId != null) {
+              return MainCubit()
+                ..getUserData()
+                ..getAllUsers();
+            } else {
+              return MainCubit()..getAllUsers();
+            }
+          },
+        ),
         BlocProvider(
           create: (context) => SignUpCubit(),
         ),
