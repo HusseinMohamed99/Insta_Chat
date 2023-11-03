@@ -8,7 +8,6 @@ import 'package:insta_chat/shared/components/navigator.dart';
 import 'package:insta_chat/utils/app_string.dart';
 import 'package:insta_chat/utils/color_manager.dart';
 import 'package:insta_chat/utils/value_manager.dart';
-import 'package:insta_chat/view/signIn/sign_in_view.dart';
 
 class InstructionsPasswordScreen extends StatelessWidget {
   const InstructionsPasswordScreen({super.key});
@@ -132,7 +131,7 @@ class InstructionsChangePasswordBody extends StatelessWidget {
             alignment: Alignment.bottomLeft,
             child: defaultMaterialButton(
               function: () {
-                navigateAndFinish(context, const SignInScreen());
+                pop(context);
               },
               text: AppString.gotIt,
               context: context,
