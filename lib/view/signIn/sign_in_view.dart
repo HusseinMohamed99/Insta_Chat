@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:insta_chat/cubits/auth/auth_cubit.dart';
+import 'package:insta_chat/cubits/auth/auth_state.dart';
 import 'package:insta_chat/cubits/main/main_cubit.dart';
-import 'package:insta_chat/cubits/sign_in/sign_in_cubit.dart';
-import 'package:insta_chat/cubits/sign_in/sign_in_state.dart';
 import 'package:insta_chat/shared/components/buttons.dart';
 import 'package:insta_chat/shared/components/constants.dart';
 import 'package:insta_chat/shared/components/navigator.dart';
@@ -29,8 +29,8 @@ class SignInScreen extends StatelessWidget {
     final FocusNode emailFocusNode = FocusNode();
     final FocusNode passwordFocusNode = FocusNode();
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    final SignInCubit signInCubit = SignInCubit.get(context);
-    return BlocConsumer<SignInCubit, SignInState>(
+    final AuthCubit signInCubit = AuthCubit.get(context);
+    return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is SignInSuccessState) {
           CacheHelper.saveData(value: state.uid, key: 'uId');

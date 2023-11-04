@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:insta_chat/cubits/email_verification/email_verification_cubit.dart';
-import 'package:insta_chat/cubits/email_verification/email_verification_state.dart';
+import 'package:insta_chat/cubits/auth/auth_cubit.dart';
+import 'package:insta_chat/cubits/auth/auth_state.dart';
 import 'package:insta_chat/cubits/main/main_cubit.dart';
 import 'package:insta_chat/image_assets.dart';
 import 'package:insta_chat/shared/components/buttons.dart';
@@ -14,7 +14,7 @@ import 'package:insta_chat/view/signIn/sign_in_view.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class EmailVerificationScreen extends StatelessWidget {
-  const EmailVerificationScreen({Key? key}) : super(key: key);
+  const EmailVerificationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class EmailVerificationScreen extends StatelessWidget {
     double screenHeight = MediaQuery.sizeOf(context).height;
     double screenWidth = MediaQuery.sizeOf(context).width;
 
-    return BlocConsumer<EmailVerificationCubit, EmailVerificationState>(
+    return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is ReloadSuccessState) {
           showToast(
@@ -45,7 +45,7 @@ class EmailVerificationScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        EmailVerificationCubit cubit = EmailVerificationCubit.get(context);
+        AuthCubit cubit = AuthCubit.get(context);
 
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: const SystemUiOverlayStyle(

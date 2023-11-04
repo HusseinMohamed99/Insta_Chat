@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:insta_chat/cubits/sign_up/sign_up_cubit.dart';
-import 'package:insta_chat/cubits/sign_up/sign_up_state.dart';
+import 'package:insta_chat/cubits/auth/auth_cubit.dart';
+import 'package:insta_chat/cubits/auth/auth_state.dart';
 import 'package:insta_chat/shared/components/buttons.dart';
 import 'package:insta_chat/shared/components/check_box.dart';
 import 'package:insta_chat/shared/components/navigator.dart';
@@ -35,13 +35,13 @@ class SignUpScreen extends StatelessWidget {
     final FocusNode passwordFocusNode = FocusNode();
     final FocusNode confirmPasswordFocusNode = FocusNode();
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    final SignUpCubit signUpCubit = SignUpCubit.get(context);
+    final AuthCubit signUpCubit = AuthCubit.get(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
       ),
-      child: BlocConsumer<SignUpCubit, SignUpState>(
+      child: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is SignUpSuccessState) {
             CacheHelper.saveData(value: state.userModel.uid, key: 'uId');

@@ -5,12 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:insta_chat/bloc_observer.dart';
-import 'package:insta_chat/cubits/email_verification/email_verification_cubit.dart';
+import 'package:insta_chat/cubits/auth/auth_cubit.dart';
 import 'package:insta_chat/cubits/main/main_cubit.dart';
 import 'package:insta_chat/cubits/main/main_state.dart';
-import 'package:insta_chat/cubits/reset_password/reset_password_cubit.dart';
-import 'package:insta_chat/cubits/sign_in/sign_in_cubit.dart';
-import 'package:insta_chat/cubits/sign_up/sign_up_cubit.dart';
 import 'package:insta_chat/firebase_options.dart';
 import 'package:insta_chat/shared/components/constants.dart';
 import 'package:insta_chat/shared/components/show_toast.dart';
@@ -23,7 +20,9 @@ import 'package:insta_chat/view/welcome/welcome_view.dart';
 FirebaseMessaging messaging = FirebaseMessaging.instance;
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   showToast(text: 'You Received Message', state: ToastStates.success);
-  print("Handling a background message: ${message.messageId}");
+  if (kDebugMode) {
+    print("Handling a background message: ${message.messageId}");
+  }
 }
 
 /// Create a [AndroidNotificationChannel] for heads up notifications
@@ -75,7 +74,6 @@ void showFlutterNotification(RemoteMessage message) {
           channel.id,
           channel.name,
           channelDescription: channel.description,
-          // TODO add a proper drawable resource to android, for now using
           //      one that already exists in example app.
           icon: 'launch_background',
         ),
@@ -110,11 +108,17 @@ Future<void> main() async {
   //when the app is opened
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     showToast(text: 'You Received Message', state: ToastStates.success);
-    print('Got a message whilst in the foreground!');
-    print('Message data: ${message.data}');
+    if (kDebugMode) {
+      print('Got a message whilst in the foreground!');
+    }
+    if (kDebugMode) {
+      print('Message data: ${message.data}');
+    }
 
     if (message.notification != null) {
-      print('Message also contained a notification: ${message.notification}');
+      if (kDebugMode) {
+        print('Message also contained a notification: ${message.notification}');
+      }
     }
   });
   // when click on notification to open app
@@ -148,7 +152,9 @@ Future<void> main() async {
 
 Future<String?> getFcmToken() async {
   String? token = await messaging.getToken();
-  print('Token id:$token');
+  if (kDebugMode) {
+    print('Token id:$token');
+  }
   return token;
 }
 
@@ -172,16 +178,7 @@ class MyApp extends StatelessWidget {
           },
         ),
         BlocProvider(
-          create: (context) => SignUpCubit(),
-        ),
-        BlocProvider(
-          create: (context) => SignInCubit(),
-        ),
-        BlocProvider(
-          create: (context) => ResetPasswordCubit(),
-        ),
-        BlocProvider(
-          create: (context) => EmailVerificationCubit(),
+          create: (context) => AuthCubit(),
         ),
       ],
       child: BlocConsumer<MainCubit, MainState>(

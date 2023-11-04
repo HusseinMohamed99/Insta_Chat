@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:insta_chat/utils/color_manager.dart';
 
 class AdaptiveIndicator extends StatelessWidget {
-  const AdaptiveIndicator({Key? key}) : super(key: key);
+  const AdaptiveIndicator({super.key});
 
   @override
   Widget build(BuildContext context) {
